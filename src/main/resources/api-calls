@@ -1,0 +1,43 @@
+Create Profile:
+url:http://localhost:8080/v1/descent-form/create-profile
+header: context-type:application/json
+payload:
+
+{
+"lastName":"Younus",
+"middleName":"Attari",
+"firstName":"Muhammed",
+"dob":"01-05-1985",
+"pob":"Hyderabad",
+"email":"muhammedyounusattari@gmail.com",
+"address":"Hyderabad",
+"number":7865,
+"gender":"Male"
+}
+
+==============================================================================================
+Create Profile:
+url:http://localhost:8080/v1/descent-form/login
+header: context-type:application/json
+payload:
+
+{
+"lastName":"Younus",
+"middleName":"Attari",
+"firstName":"Muhammed",
+"dob":"01-05-1985",
+"pob":"Hyderabad",
+"email":"muhammedyounusattari@gmail.com",
+"address":"Hyderabad",
+"number":7865,
+"gender":"Male"
+}
+
+===============================================================================================
+
+
+Display All Forms
+url:http://localhost:8080/v1/descent-form/all-forms
+
+
+Submit DescentForm

@@ -6,17 +6,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="allForms")
 public class AllForms {
 
-	@Id
-	private int id;
+	//@Id
+	private String id;
 	private String name;
 	private String link;
 
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

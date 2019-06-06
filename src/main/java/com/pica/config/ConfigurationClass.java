@@ -1,28 +1,48 @@
 package com.pica.config;
 
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.mongodb.MongoClient;
+import pica.notification.config.NotificationConfig;
 
 @Configuration
-public class ConfigurationClass {
+public class ConfigurationClass extends OncePerRequestFilter {
 
-	public @Bean
-	MongoDbFactory mongoDbFactory() throws Exception {
-		return new SimpleMongoDbFactory(new MongoClient(), "db");
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+		response.addHeader("Access-Control-Allow-Origin", "*");
+	    if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
+	     // LOGGER.debug("Sending Header....");
+	      response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+	      // response.addHeader("Access-Control-Allow-Headers", "Authorization");
+	      response.addHeader("Access-Control-Allow-Headers", "Content-Type");
+	      response.addHeader("Access-Control-Max-Age", "1");
+	    }
+	    filterChain.doFilter(request, response);
+		
+	}
+	
+	@Bean
+	public NotificationConfig getNotificationConfig() {
+		return new NotificationConfig();
 	}
 
-	public 
-	@Bean
-	MongoTemplate mongoTemplate() throws Exception {
-		
-		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
-				
-		return mongoTemplate;
-		
-  }
+//	@Bean
+//	public MongoClient mongo() {
+//		return new MongoClient("localhost");
+//	}
+//
+//	@Bean
+//	public MongoTemplate mongoTemplate() throws Exception {
+//		return new MongoTemplate(mongo(), "db");
+//	}
 }
