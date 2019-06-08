@@ -1,9 +1,11 @@
 package com.pica.web;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,4 +34,10 @@ public interface DescentFormController {
 	
 	@RequestMapping(value = DescentFormConstantsURIConstants.DESCENT_DOC_UPLOAD,headers = "content-type=multipart/form-data",method = RequestMethod.POST)
     public ResponseEntity<?> uploadFile(@PathVariable("userId") String userId, @RequestParam("file") MultipartFile file, @RequestParam("dataType") String dataType);
+
+	@RequestMapping(value = DescentFormConstantsURIConstants.VALIDATE_EMAIL, method=RequestMethod.GET)
+	public ResponseEntity<?> validateEmail(@PathVariable("email") String email);
+	
+	@RequestMapping(value = DescentFormConstantsURIConstants.RESET_PASSWORD,method=RequestMethod.POST)
+	public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> payload);
 }

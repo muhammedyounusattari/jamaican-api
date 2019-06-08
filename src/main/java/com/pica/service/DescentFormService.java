@@ -1,6 +1,7 @@
 package com.pica.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,5 +21,9 @@ public interface DescentFormService {
 	DescentForm submitDescentApplication(DescentFormHandler descentFormHandler);
 
 	DescentForm uploadDescentDoc(String string, MultipartFile file);
+
+	Profile validateEmailAddress(String email);
+
+	Profile resetPassword(Map<String, String> payload);
 
 }

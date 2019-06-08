@@ -30,6 +30,17 @@ public class EmailMessageTemplate {
 		return new String(message);
 		
 	}
+	
+	public static String getForgotPasswordMessageTemplate(String url) {
+		StringBuffer message = new StringBuffer();
+		message.append("You're receiving this e-mail because you requested a password reset for your Jamaican citizen ship account.<br/>");
+		message.append("Please go to the following page and choose a new password:<br/>");
+		message.append("<a href='"+url+"'>"+url+"</a><br/><br/>");
+		message.append("Thanks,<br/>");
+		message.append("Passport, Immigration and Citizenship<br/>");
+		message.append("Agency");
+		return new String(message);
+	}
 
 	
 	

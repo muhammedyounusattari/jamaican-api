@@ -1,6 +1,7 @@
 package com.pica.web.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,12 +66,26 @@ public class DescentFormControllerImpl implements DescentFormController {
 	@Override
     public ResponseEntity<?> uploadFile(@PathVariable("userId") String userId, @RequestParam("file") MultipartFile file, @RequestParam("dataType") String dataType) {
 		if(file.isEmpty())
-			return new ResponseEntity<>("Found Ghost",HttpStatus.BAD_GATEWAY);
+			return new ResponseEntity<>("file date doesn't exsit",HttpStatus.BAD_REQUEST);
 		
 		DescentForm descentForm = descentService.uploadDescentDoc(userId,file);
 		if(descentForm==null)
-			return new ResponseEntity<>("Found Ghost",HttpStatus.BAD_GATEWAY);
+			return new ResponseEntity<>("payload missing",HttpStatus.BAD_REQUEST);
 		
 		return new ResponseEntity<>(descentForm,HttpStatus.OK);
     }
+
+	@Override
+	public ResponseEntity<?> validateEmail(String email) {
+		if(email==null)
+		return new ResponseEntity<>("email address missing",HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<Profile>(descentService.validateEmailAddress(email),HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> resetPassword(Map<String, String> payload) {
+		
+		return new ResponseEntity<Profile>(descentService.resetPassword(payload),HttpStatus.OK);
+	}
 }

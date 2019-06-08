@@ -1,6 +1,7 @@
 package com.pica.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 
@@ -116,6 +117,33 @@ public class DescentFormServiceImpl implements DescentFormService {
 			}
 		}
 		return descentForm;
+	}
+
+	@Override
+	public Profile validateEmailAddress(String email) {
+		Profile profile = createProfileDAO.findByEmail(email);
+		if(profile != null) {
+			email = email.toLowerCase();
+			String url="http://localhost:4200/resetPassword/"+email+"/";
+			subject="Password reset on jamaican application";
+			message=EmailMessageTemplate.getForgotPasswordMessageTemplate(url);
+			try {
+				notificationConfig.sendMail(new String[] { email }, subject, message, from);
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+		}
+		return profile;
+	}
+
+	@Override
+	public Profile resetPassword(Map<String, String> payload) {
+		Profile profile  = createProfileDAO.findByEmail(payload.get("email"));
+		if(profile !=null) {
+			profile.setPassword(payload.get("password"));
+			return createProfileDAO.save(profile);
+		}
+		return profile;
 	}
 
 }
