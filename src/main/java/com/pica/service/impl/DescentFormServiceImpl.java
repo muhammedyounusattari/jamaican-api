@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mongodb.MongoWriteException;
 import com.pica.config.PicaStringGenerator;
 import com.pica.dao.AllFormsDAO;
 import com.pica.dao.CreateProfileDAO;
@@ -69,6 +70,8 @@ public class DescentFormServiceImpl implements DescentFormService {
 			profile = createProfileDAO.save(profile);
 			message = EmailMessageTemplate.getProfileMessageTemplate(profile);
 			notificationConfig.sendMail(new String[] { profile.getEmail() }, subject, message, "dummy");
+		} catch(MongoWriteException e) {
+			e.printStackTrace();
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
