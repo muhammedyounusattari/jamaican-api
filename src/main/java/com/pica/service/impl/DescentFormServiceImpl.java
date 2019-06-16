@@ -1,5 +1,7 @@
 package com.pica.service.impl;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +72,7 @@ public class DescentFormServiceImpl implements DescentFormService {
 			profile = createProfileDAO.save(profile);
 			message = EmailMessageTemplate.getProfileMessageTemplate(profile);
 			notificationConfig.sendMail(new String[] { profile.getEmail() }, subject, message, "dummy");
-		} catch(MongoWriteException e) {
+		} catch (MongoWriteException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -88,27 +90,45 @@ public class DescentFormServiceImpl implements DescentFormService {
 	@Override
 	public DescentForm submitDescentApplication(DescentFormHandler descentFormHandler) {
 		DescentForm descentForm = DescentFormMapper.formatPayload(descentFormHandler);
+		DescentForm descentFormDb = descentFormDAO.findByProfileEmail(descentForm.getProfile().getEmail());
+
+		if (descentFormDb != null) {
+			descentForm = DescentFormMapper.syncDescentForm(descentForm, descentFormDb);
+			createProfileDAO.save(descentForm.getProfile());
+			return descentFormDAO.save(descentForm);
+		}
+
 		descentForm.setId((int) sequenceDAO.getNextSequenceIdProfile(HOSTING));
-		descentForm = descentFormDAO.save(descentForm);
-		return descentForm;
+		Profile profileDb = createProfileDAO.findByEmail(descentForm.getProfile().getEmail());
+		profileDb = DescentFormMapper.syncProfileForm(descentForm.getProfile(), profileDb);
+		descentForm.setProfile(createProfileDAO.save(profileDb));
+		return descentFormDAO.save(descentForm);
+
 	}
 
 	@Override
 	public DescentForm uploadDescentDoc(String email, MultipartFile file) {
-		DescentForm descentForm = descentFormDAO.findByProfileEmail(email).get(0);
+		DescentForm descentForm = descentFormDAO.findByProfileEmail(email);
 
 		if (descentForm != null && descentForm.getId() > 0) {
 			try {
 				if (DescentFormMapper.saveDocument("" + descentForm.getId(), file)) {
-					descentForm.setAppCode("" + descentForm.getId());
-					descentForm.setBase29Code(PicaStringGenerator.generateBase29Code("BH"));
-					descentForm.setCustId("" + descentForm.getId());
-					descentFormDAO.save(descentForm);
+					String appCode = "" + descentForm.getId();
+					String base29Code = PicaStringGenerator.generateBase29Code("BH");
+					String custId = "" + descentForm.getId();
 
 					Profile profile = createProfileDAO.findByEmail(email);
-					profile.setStatus("Submitted");
-					createProfileDAO.save(profile);
-					
+					profile.setStatus("submitted");
+					profile.setAppCode(appCode);
+					profile.setBase29Code(base29Code);
+					profile.setCustId(custId);
+					profile.setAppliedFor("Descent Application Form");
+
+					profile = createProfileDAO.save(profile);
+					descentForm.setProfile(profile);
+					descentForm.setAppliedDate(DateTimeFormatter.ofPattern("dd/MM/YYYY").format(LocalDateTime.now()));
+					descentFormDAO.save(descentForm);
+
 					subject = "Descent Application Form status ";
 					message = EmailMessageTemplate.getDescentApplicationMessageTemplate(descentForm);
 					notificationConfig.sendMail(new String[] { email }, subject, message, from);
@@ -125,11 +145,11 @@ public class DescentFormServiceImpl implements DescentFormService {
 	@Override
 	public Profile validateEmailAddress(String email) {
 		Profile profile = createProfileDAO.findByEmail(email);
-		if(profile != null) {
+		if (profile != null) {
 			email = email.toLowerCase();
-			String url="http://localhost:4200/resetPassword/"+email+"/";
-			subject="Password reset on jamaican application";
-			message=EmailMessageTemplate.getForgotPasswordMessageTemplate(url);
+			String url = "http://localhost:4200/resetPassword/" + email + "/";
+			subject = "Password reset on jamaican application";
+			message = EmailMessageTemplate.getForgotPasswordMessageTemplate(url);
 			try {
 				notificationConfig.sendMail(new String[] { email }, subject, message, from);
 			} catch (MessagingException e) {
@@ -141,12 +161,34 @@ public class DescentFormServiceImpl implements DescentFormService {
 
 	@Override
 	public Profile resetPassword(Map<String, String> payload) {
-		Profile profile  = createProfileDAO.findByEmail(payload.get("email"));
-		if(profile !=null) {
+		Profile profile = createProfileDAO.findByEmail(payload.get("email"));
+		if (profile != null) {
 			profile.setPassword(payload.get("password"));
 			return createProfileDAO.save(profile);
 		}
 		return profile;
+	}
+
+	@Override
+	public Profile checkEmailAddress(String email) {
+		return createProfileDAO.findByEmail(email);
+	}
+
+	@Override
+	public Profile checkApplicationStatus(String appCode) {
+		DescentForm descentForm = descentFormDAO.findByAppCode(appCode);
+		if (descentForm != null) {
+			Profile profile = createProfileDAO.findByEmail(descentForm.getProfile().getEmail());
+			if (profile != null)
+				profile.setAppliedDate(descentForm.getAppliedDate());
+			return profile;
+		}
+		return null;
+	}
+
+	@Override
+	public DescentForm getDescentForm(String email) {
+		return descentFormDAO.findByProfileEmail(email);
 	}
 
 }

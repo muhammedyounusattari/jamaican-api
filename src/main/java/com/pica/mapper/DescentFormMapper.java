@@ -15,7 +15,7 @@ import com.pica.model.Profile;
 public class DescentFormMapper {
 
 //	Dependents dependents = null;
-	
+
 	private static String UPLOADED_FOLDER = "/Users/admin/Documents/pica/";
 
 	public static DescentForm formatPayload(DescentFormHandler descentFormHander) {
@@ -54,9 +54,9 @@ public class DescentFormMapper {
 		profile.setEmail(descentFormHander.getEmail());
 		profile.setGender(descentFormHander.getGender());
 		profile.setPob(descentFormHander.getPob());
-		
+
 		return profile;
-}
+	}
 
 	private static Dependents getPaternalMotherDetails(DescentFormHandler descentFormHander) {
 		Dependents dependents = new Dependents();
@@ -111,13 +111,13 @@ public class DescentFormMapper {
 		dependents.setCob(descentFormHander.getFpob());
 		dependents.setDob(descentFormHander.getFdob());
 		return dependents;
-	
+
 	}
 
 	public static Boolean saveDocument(String location, MultipartFile file) {
-		
-		location = UPLOADED_FOLDER+location+"/";
-		 byte[] bytes;
+
+		location = UPLOADED_FOLDER + location + "/";
+		byte[] bytes;
 		try {
 			File locate = new File(location);
 			locate.mkdir();
@@ -127,9 +127,54 @@ public class DescentFormMapper {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
-			
+
 		}
 		return true;
+	}
+
+	public static DescentForm syncDescentForm(DescentForm descentForm, DescentForm descentFormDb) {
+		descentFormDb = updateProfileObject(descentForm, descentFormDb);
+		return updateDescentFormObject(descentForm, descentFormDb);
+	}
+
+	private static DescentForm updateDescentFormObject(DescentForm descentForm, DescentForm descentFormDb) {
+
+		descentFormDb.setFather(descentForm.getFather());
+		descentFormDb.setMother(descentForm.getMother());
+		descentFormDb.setPaternalFather(descentForm.getPaternalFather());
+		descentFormDb.setPaternalMother(descentForm.getPaternalMother());
+		descentFormDb.setMaternalFather(descentForm.getMaternalFather());
+		descentFormDb.setMaternalMother(descentForm.getMaternalMother());
+		return descentFormDb;
+	}
+
+	private static DescentForm updateProfileObject(DescentForm descentForm, DescentForm descentFormDb) {
+
+		Profile profile = descentForm.getProfile();
+
+		descentFormDb.getProfile().setAddress(profile.getAddress());
+		descentFormDb.getProfile().setFirstname(profile.getFirstname());
+		descentFormDb.getProfile().setLastname(profile.getLastname());
+		descentFormDb.getProfile().setGender(profile.getGender());
+		descentFormDb.getProfile().setDob(profile.getDob());
+		descentFormDb.getProfile().setNumber(profile.getNumber());
+		descentFormDb.getProfile().setPob(profile.getPob());
+
+		return descentFormDb;
+
+	}
+
+	public static Profile syncProfileForm(Profile profile, Profile profileDb) {
+
+		profileDb.setAddress(profile.getAddress());
+		profileDb.setFirstname(profile.getFirstname());
+		profileDb.setLastname(profile.getLastname());
+		profileDb.setGender(profile.getGender());
+		profileDb.setDob(profile.getDob());
+		profileDb.setNumber(profile.getNumber());
+		profileDb.setPob(profile.getPob());
+
+		return profileDb;
 	}
 
 }

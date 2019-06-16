@@ -80,12 +80,37 @@ public class DescentFormControllerImpl implements DescentFormController {
 		if(email==null)
 		return new ResponseEntity<>("email address missing",HttpStatus.BAD_REQUEST);
 		
-		return new ResponseEntity<Profile>(descentService.validateEmailAddress(email),HttpStatus.OK);
+		return new ResponseEntity<Profile>(descentService.validateEmailAddress(email.toLowerCase()),HttpStatus.OK);
 	}
 
+	
 	@Override
 	public ResponseEntity<?> resetPassword(Map<String, String> payload) {
 		
 		return new ResponseEntity<Profile>(descentService.resetPassword(payload),HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> checkEmail(String email) {
+		if(email==null)
+		return new ResponseEntity<>("email address missing",HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<Profile>(descentService.checkEmailAddress(email.toLowerCase()),HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> checkAppStatus(String appCode) {
+		if(appCode == null)
+			return new ResponseEntity<>("email address missing",HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<Profile>(descentService.checkApplicationStatus(appCode),HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> getDescentForm(String email) {
+		if(email == null)
+			return new ResponseEntity<>("email address missing",HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<DescentForm>(descentService.getDescentForm(email),HttpStatus.OK);
 	}
 }

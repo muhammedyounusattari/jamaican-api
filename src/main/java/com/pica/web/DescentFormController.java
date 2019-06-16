@@ -38,6 +38,15 @@ public interface DescentFormController {
 	@RequestMapping(value = DescentFormConstantsURIConstants.VALIDATE_EMAIL, method=RequestMethod.GET)
 	public ResponseEntity<?> validateEmail(@PathVariable("email") String email);
 	
+	@RequestMapping(value = DescentFormConstantsURIConstants.EMAIL_CHECK, method=RequestMethod.GET)
+	public ResponseEntity<?> checkEmail(@PathVariable("email") String email);
+	
 	@RequestMapping(value = DescentFormConstantsURIConstants.RESET_PASSWORD,method=RequestMethod.POST)
 	public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> payload);
+	
+	@RequestMapping(value = DescentFormConstantsURIConstants.CHECK_STATUS, method=RequestMethod.GET)
+	public ResponseEntity<?> checkAppStatus(@PathVariable("appCode") String appCode);
+	
+	@RequestMapping(value = DescentFormConstantsURIConstants.GET_DESCENT_FORM, method=RequestMethod.GET)
+	public ResponseEntity<?> getDescentForm(@PathVariable("email") String email);
 }

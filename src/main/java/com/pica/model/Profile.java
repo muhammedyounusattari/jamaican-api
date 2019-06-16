@@ -44,7 +44,48 @@ public class Profile {
 //	@NotNull(message = "password cannot be null")
 	private String password;
 	
+	private String base29Code;
 	
+	private String appCode;
+	
+	private String appliedDate;
+	
+	public String getBase29Code() {
+		return base29Code;
+	}
+
+	public void setBase29Code(String base29Code) {
+		this.base29Code = base29Code;
+	}
+
+	public String getAppCode() {
+		return appCode;
+	}
+
+	public void setAppCode(String appCode) {
+		this.appCode = appCode;
+	}
+
+	public String getCustId() {
+		return custId;
+	}
+
+	public void setCustId(String custId) {
+		this.custId = custId;
+	}
+
+	private String custId;
+	
+	private String appliedFor;
+	
+	public String getAppliedFor() {
+		return appliedFor;
+	}
+
+	public void setAppliedFor(String appliedFor) {
+		this.appliedFor = appliedFor;
+	}
+
 	private String status;
 	
 	public int getId() {
@@ -144,4 +185,14 @@ public class Profile {
 	public String getStatus() {
 		return this.status;
 	}
+
+	public String getAppliedDate() {
+		return appliedDate;
+	}
+
+	public void setAppliedDate(String appliedDate) {
+		this.appliedDate = appliedDate;
+	}
+	
+	
 }

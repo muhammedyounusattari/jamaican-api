@@ -12,6 +12,9 @@ import com.pica.model.DescentForm;
 public interface DescentFormDAO extends MongoRepository<DescentForm, Long> {
 
 	@Query(value = "{ 'profile.email' : ?0 }")
-	List<DescentForm> findByProfileEmail(String email);
+	DescentForm findByProfileEmail(String email);
+
+	@Query(value = "{'profile.appCode':?0}")
+	DescentForm findByAppCode(String appCode);
 
 }

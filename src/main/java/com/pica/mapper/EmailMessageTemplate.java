@@ -22,8 +22,8 @@ public class EmailMessageTemplate {
 		message.append("<br/><br/>");
 		message.append(profile.getFirstname()+"  "+profile.getLastname()+"<br/><br/>");
 		message.append(profile.getAddress()+"<br/><br/>");
-		message.append("Dear Mr./Ms "+profile.getLastname()+","+profile.getFirstname()+"<br/><br/>");
-		message.append("Thank you for submitting an application for Descent Application. Your application number is "+descentForm.getAppCode()+" which may be used to track the progress of your application. Your application and supporting document will be reviewed and an email update provided to you within 5 working days.<br/><br/>");
+		message.append("Dear Mr./Ms "+profile.getLastname()+","+"<br/><br/>");
+		message.append("Thank you for submitting an application for Descent Application. Your application number is "+profile.getAppCode()+" which may be used to track the progress of your application. Your application and supporting document will be reviewed and an email update provided to you within 5 working days.<br/><br/>");
 		message.append("Regards,<br/>");
 		message.append("Passport, Immigration and Citizenship<br/>");
 		message.append("Agency");

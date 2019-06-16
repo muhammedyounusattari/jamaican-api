@@ -1,7 +1,10 @@
 package com.pica.model;
 
+import java.sql.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Document(collection = "descentForm")
 public class DescentForm {
@@ -15,10 +18,13 @@ public class DescentForm {
 	private Dependents paternalMother;
 	private Dependents maternalFather;
 	private Dependents maternalMother;
-	private String base29Code;
-	private String appCode;
-	private String custId;
+//	private String base29Code;
+//	private String appCode;
+//	private String custId;
 
+	//@DateTimeFormat(pattern = "mm/dd/yyyy")
+	private String appliedDate;
+	
 	public int getId() {
 		return id;
 	}
@@ -83,29 +89,38 @@ public class DescentForm {
 		this.maternalMother = maternalMother;
 	}
 
-	public String getBase29Code() {
-		return base29Code;
+	public String getAppliedDate() {
+		return appliedDate;
 	}
 
-	public void setBase29Code(String base29Code) {
-		this.base29Code = base29Code;
+	public void setAppliedDate(String appliedDate) {
+		this.appliedDate = appliedDate;
 	}
 
-	public String getAppCode() {
-		return appCode;
-	}
+//	public String getBase29Code() {
+//		return base29Code;
+//	}
+//
+//	public void setBase29Code(String base29Code) {
+//		this.base29Code = base29Code;
+//	}
+//
+//	public String getAppCode() {
+//		return appCode;
+//	}
+//
+//	public void setAppCode(String appCode) {
+//		this.appCode = appCode;
+//	}
+//
+//	public String getCustId() {
+//		return custId;
+//	}
+//
+//	public void setCustId(String custId) {
+//		this.custId = custId;
+//	}
 
-	public void setAppCode(String appCode) {
-		this.appCode = appCode;
-	}
-
-	public String getCustId() {
-		return custId;
-	}
-
-	public void setCustId(String custId) {
-		this.custId = custId;
-	}
-
+	
 	
 }
