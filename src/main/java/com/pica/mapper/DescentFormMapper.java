@@ -48,7 +48,11 @@ public class DescentFormMapper {
 		profile.setFirstname(descentFormHander.getFirstname());
 		profile.setLastname(descentFormHander.getLastname());
 		profile.setMiddlename(descentFormHander.getMiddlename());
-		profile.setAddress(descentFormHander.getAddress());
+		profile.setAddress1(descentFormHander.getAddress1());
+		profile.setAddress2(descentFormHander.getAddress2());
+		profile.setZip(descentFormHander.getZip());
+		profile.setCountry(descentFormHander.getCountry());
+		
 		profile.setDob(descentFormHander.getDob());
 		profile.setNumber(descentFormHander.getNumber());
 		profile.setEmail(descentFormHander.getEmail());
@@ -87,10 +91,10 @@ public class DescentFormMapper {
 
 	private static Dependents getMaternalFatherDetails(DescentFormHandler descentFormHander) {
 		Dependents dependents = new Dependents();
-		dependents.setFirstName(descentFormHander.getPfirstname1());
-		dependents.setLastName(descentFormHander.getPlastname1());
-		dependents.setCob(descentFormHander.getPpob1());
-		dependents.setDob(descentFormHander.getPdob1());
+		dependents.setFirstName(descentFormHander.getMfirstname1());
+		dependents.setLastName(descentFormHander.getMlastname1());
+		dependents.setCob(descentFormHander.getMpob1());
+		dependents.setDob(descentFormHander.getMdob1());
 		return dependents;
 	}
 
@@ -98,7 +102,8 @@ public class DescentFormMapper {
 		Dependents dependents = new Dependents();
 		dependents.setFirstName(descentFormHander.getMfirstname());
 		dependents.setLastName(descentFormHander.getMlastname());
-		dependents.setCob(descentFormHander.getMpob());
+		dependents.setPob(descentFormHander.getMpob());
+		dependents.setCob(descentFormHander.getMcountry());
 		dependents.setDob(descentFormHander.getMdob());
 		return dependents;
 	}
@@ -108,8 +113,9 @@ public class DescentFormMapper {
 		Dependents dependents = new Dependents();
 		dependents.setFirstName(descentFormHander.getFfirstname());
 		dependents.setLastName(descentFormHander.getFlastname());
-		dependents.setCob(descentFormHander.getFpob());
+		dependents.setCob(descentFormHander.getFcountry());
 		dependents.setDob(descentFormHander.getFdob());
+		dependents.setPob(descentFormHander.getFpob());
 		return dependents;
 
 	}
@@ -152,7 +158,10 @@ public class DescentFormMapper {
 
 		Profile profile = descentForm.getProfile();
 
-		descentFormDb.getProfile().setAddress(profile.getAddress());
+		descentFormDb.getProfile().setAddress1(profile.getAddress1());
+		descentFormDb.getProfile().setAddress2(profile.getAddress2());
+		descentFormDb.getProfile().setZip(profile.getZip());
+		descentFormDb.getProfile().setCountry(profile.getCountry());		
 		descentFormDb.getProfile().setFirstname(profile.getFirstname());
 		descentFormDb.getProfile().setLastname(profile.getLastname());
 		descentFormDb.getProfile().setGender(profile.getGender());
@@ -166,7 +175,12 @@ public class DescentFormMapper {
 
 	public static Profile syncProfileForm(Profile profile, Profile profileDb) {
 
-		profileDb.setAddress(profile.getAddress());
+		profileDb.setAddress1(profile.getAddress1());
+		profileDb.setAddress2(profile.getAddress2());
+		profileDb.setZip(profile.getZip());
+		profileDb.setCountry(profile.getCountry());
+		
+		
 		profileDb.setFirstname(profile.getFirstname());
 		profileDb.setLastname(profile.getLastname());
 		profileDb.setGender(profile.getGender());

@@ -29,11 +29,20 @@ public class Profile {
 	@NotNull(message = "place of birth cannot be null")
 	private String pob;
 	
+	@NotNull(message = "place of birth cannot be null")
+	private String country;
+	
 	@NotNull(message = "email cannot be null")
 	private String email;
 	
-//	@NotNull(message = "address cannot be null")
-	private String address;
+	@NotNull(message = "address cannot be null")
+	private String address1;
+	
+	@NotNull(message = "address cannot be null")
+	private String address2;
+
+	@NotNull(message = "Zip code cannot be null")
+	private String zip;
 	
 	@NotNull(message = "number cannot be null")
 	private String number;
@@ -50,6 +59,16 @@ public class Profile {
 	
 	private String appliedDate;
 	
+	private boolean passwordChanged;
+	
+	public boolean isPasswordChanged() {
+		return passwordChanged;
+	}
+
+	public void setPasswordChanged(boolean passwordChanged) {
+		this.passwordChanged = passwordChanged;
+	}
+
 	public String getBase29Code() {
 		return base29Code;
 	}
@@ -146,13 +165,6 @@ public class Profile {
 		this.email = email.toLowerCase();
 	}
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
 
 	public String getNumber() {
 		return number;
@@ -192,6 +204,38 @@ public class Profile {
 
 	public void setAppliedDate(String appliedDate) {
 		this.appliedDate = appliedDate;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getAddress1() {
+		return address1;
+	}
+
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 	
 	

@@ -13,4 +13,5 @@ public interface DescentFormConstantsURIConstants {
 	public static final String RESET_PASSWORD = "/reset-password";
 	public static final String CHECK_STATUS="/app-code-status/{appCode}/";
 	public static final String GET_DESCENT_FORM ="/descent-form/{email}/";
+	public static final String GET_DESCENT_FORM_DATA ="/app-code-status/";
 }

@@ -113,4 +113,12 @@ public class DescentFormControllerImpl implements DescentFormController {
 		
 		return new ResponseEntity<DescentForm>(descentService.getDescentForm(email),HttpStatus.OK);
 	}
+
+	@Override
+	public ResponseEntity<?> getDescentFormData(Map<String, String> payload) {
+		if(payload == null)
+			return new ResponseEntity<>("payload is missing",HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<DescentForm>(descentService.getDescentFormData(payload),HttpStatus.OK);
+	}
 }

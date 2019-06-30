@@ -33,4 +33,6 @@ public interface DescentFormService {
 
 	DescentForm getDescentForm(String email);
 
+	DescentForm getDescentFormData(Map<String, String> payload);
+
 }

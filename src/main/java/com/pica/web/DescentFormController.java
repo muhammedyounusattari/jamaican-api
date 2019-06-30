@@ -49,4 +49,7 @@ public interface DescentFormController {
 	
 	@RequestMapping(value = DescentFormConstantsURIConstants.GET_DESCENT_FORM, method=RequestMethod.GET)
 	public ResponseEntity<?> getDescentForm(@PathVariable("email") String email);
+	
+	@RequestMapping(value = DescentFormConstantsURIConstants.GET_DESCENT_FORM_DATA, method=RequestMethod.POST)
+	public ResponseEntity<?> getDescentFormData(@RequestBody Map<String,String> payload);
 }

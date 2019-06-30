@@ -17,4 +17,6 @@ public interface DescentFormDAO extends MongoRepository<DescentForm, Long> {
 	@Query(value = "{'profile.appCode':?0}")
 	DescentForm findByAppCode(String appCode);
 
+	@Query(value="{'appCode':?0,'profile.dob':?1}")
+	DescentForm findByAppCodeAndDOB(String appCode, String dob);
 }

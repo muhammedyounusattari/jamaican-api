@@ -164,6 +164,7 @@ public class DescentFormServiceImpl implements DescentFormService {
 		Profile profile = createProfileDAO.findByEmail(payload.get("email"));
 		if (profile != null) {
 			profile.setPassword(payload.get("password"));
+			profile.setPasswordChanged(true);
 			return createProfileDAO.save(profile);
 		}
 		return profile;
@@ -189,6 +190,11 @@ public class DescentFormServiceImpl implements DescentFormService {
 	@Override
 	public DescentForm getDescentForm(String email) {
 		return descentFormDAO.findByProfileEmail(email);
+	}
+
+	@Override
+	public DescentForm getDescentFormData(Map<String, String> payload) {
+		return descentFormDAO.findByAppCodeAndDOB(payload.get("appCode"), payload.get("appDate"));
 	}
 
 }

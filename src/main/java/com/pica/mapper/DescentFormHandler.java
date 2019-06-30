@@ -33,7 +33,13 @@ public class DescentFormHandler {
 	private String email;
 	
 //	@NotNull(message = "address cannot be null")
-	private String address;
+	private String address1;
+	
+	private String address2;
+	
+	private String country;
+	
+	private String zip;
 	
 //	@NotNull(message = "number cannot be null")
 	private String number;
@@ -52,6 +58,8 @@ public class DescentFormHandler {
 	private String mfirstname;
 	private String mdob;
 	private String mpob;
+	private String mcountry;
+	private String fcountry;
 
 	private String plastname1;
 	private String pfirstname1;
@@ -129,13 +137,6 @@ public class DescentFormHandler {
 		this.email = email;
 	}
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
 
 	public String getNumber() {
 		return number;
@@ -355,6 +356,58 @@ public class DescentFormHandler {
 
 	public void setMpob2(String mpob2) {
 		this.mpob2 = mpob2;
+	}
+
+	public String getAddress1() {
+		return address1;
+	}
+
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZipcode(String zip) {
+		this.zip = zip;
+	}
+
+	public String getMcountry() {
+		return mcountry;
+	}
+
+	public void setMcountry(String mcountry) {
+		this.mcountry = mcountry;
+	}
+
+	public String getFcountry() {
+		return fcountry;
+	}
+
+	public void setFcountry(String fcountry) {
+		this.fcountry = fcountry;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 
 }

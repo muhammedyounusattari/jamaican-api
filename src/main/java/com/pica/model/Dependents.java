@@ -6,6 +6,15 @@ public class Dependents {
 	private String firstName;
 	private String dob;
 	private String cob;
+	private String pob;
+
+	public String getPob() {
+		return pob;
+	}
+
+	public void setPob(String pob) {
+		this.pob = pob;
+	}
 
 	public String getLastName() {
 		return lastName;
