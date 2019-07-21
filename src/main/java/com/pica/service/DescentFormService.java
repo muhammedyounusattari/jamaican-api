@@ -4,11 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pica.mapper.DescentFormHandler;
+import com.pica.model.Agent;
 import com.pica.model.AllForms;
 import com.pica.model.Profile;
+import com.pica.model.Supervisor;
+import com.pica.model.UploadDocuments;
+import com.pica.payloads.AssignedApplicationPayload;
 import com.pica.model.DescentForm;
 
 public interface DescentFormService {
@@ -34,5 +39,17 @@ public interface DescentFormService {
 	DescentForm getDescentForm(String email);
 
 	DescentForm getDescentFormData(Map<String, String> payload);
+
+	List<DescentForm> getReviewForms(String formType);
+
+	List<Agent> getAgents();
+
+	Supervisor assignApplicationToAgent(AssignedApplicationPayload payload);
+
+	Agent getAgentDetails(Profile profile);
+
+	DescentForm getApplicantForm(String applicantId);
+
+	Agent updateApplicantStatus(Map<String, String> payload);
 
 }

@@ -8,12 +8,15 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.pica.commons.PICAApplictions;
+
 @Document(collection="profile")
+
 public class Profile {
 
 	@Id
 //	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private int _id;
 	
 	@NotNull(message = "lastname cannot be null")
 	private String lastname;
@@ -60,6 +63,12 @@ public class Profile {
 	private String appliedDate;
 	
 	private boolean passwordChanged;
+	
+	private PICAApplictions applied;
+	
+	private String loginType;
+	
+	private String comment;
 	
 	public boolean isPasswordChanged() {
 		return passwordChanged;
@@ -108,11 +117,11 @@ public class Profile {
 	private String status;
 	
 	public int getId() {
-		return id;
+		return _id;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	
@@ -238,5 +247,28 @@ public class Profile {
 		this.zip = zip;
 	}
 	
+	public void setApplied(PICAApplictions applied) {
+		this.applied = applied;
+	}
+	
+	public PICAApplictions getApplied() {
+		return this.applied;
+	}
+
+	public String getLoginType() {
+		return loginType;
+	}
+
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
+	}
+	
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
+	public String getComment() {
+		return comment;
+	}
 	
 }

@@ -66,5 +66,42 @@ public class SequenceDaoImpl implements SequenceDAO {
 		
 		return seqId.getSeq();
 	}
+	
+	@Override
+	public long getNextSequenceIdAgent(String key) throws SequenceException {
+		
+		Query query = new Query(Criteria.where("_id").is(key));
+		
+		Update update = new Update();
+		update.inc("seq",1);
+		
+		FindAndModifyOptions options = new FindAndModifyOptions();
+		options.returnNew(true);
+		
+		DescentFormSequence seqId =  mongoOperation.findAndModify(query, update, options,DescentFormSequence.class);
+		if(seqId == null)
+			throw new SequenceException("unable to get sequence id for key :"+key);
+		
+		return seqId.getSeq();
+	}
+	
+
+	@Override
+	public long getNextSequenceIdSupervisor(String key) throws SequenceException {
+		
+		Query query = new Query(Criteria.where("_id").is(key));
+		
+		Update update = new Update();
+		update.inc("seq",1);
+		
+		FindAndModifyOptions options = new FindAndModifyOptions();
+		options.returnNew(true);
+		
+		DescentFormSequence seqId =  mongoOperation.findAndModify(query, update, options,DescentFormSequence.class);
+		if(seqId == null)
+			throw new SequenceException("unable to get sequence id for key :"+key);
+		
+		return seqId.getSeq();
+	}
 
 }

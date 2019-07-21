@@ -1,6 +1,7 @@
 package com.pica.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,13 +19,17 @@ public class DescentForm {
 	private Dependents paternalMother;
 	private Dependents maternalFather;
 	private Dependents maternalMother;
+	private List<ApplicantDocument> documents;
+
 //	private String base29Code;
 //	private String appCode;
 //	private String custId;
 
-	//@DateTimeFormat(pattern = "mm/dd/yyyy")
+	// @DateTimeFormat(pattern = "mm/dd/yyyy")
 	private String appliedDate;
-	
+
+	private String status;
+
 	public int getId() {
 		return id;
 	}
@@ -97,6 +102,22 @@ public class DescentForm {
 		this.appliedDate = appliedDate;
 	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return this.status;
+	}
+
+	public List<ApplicantDocument> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<ApplicantDocument> documents) {
+		this.documents = documents;
+	}
+
 //	public String getBase29Code() {
 //		return base29Code;
 //	}
@@ -121,6 +142,4 @@ public class DescentForm {
 //		this.custId = custId;
 //	}
 
-	
-	
 }

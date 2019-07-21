@@ -3,10 +3,15 @@ package com.pica.mapper;
 import java.time.LocalDate;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.pica.model.DescentForm;
 import com.pica.model.Profile;
 
 public class EmailMessageTemplate {
+	
+	@Value("${emai.link.url}")
+	private String emailLink;
 
 	public static String getProfileMessageTemplate(Profile profile) {
 		StringBuffer message = new StringBuffer();
@@ -45,29 +50,5 @@ public class EmailMessageTemplate {
 	
 	
 	
-	/*
-	public static String getMessageBodyForDescentForm(Profile profile) {
-		StringBuffer message = new StringBuffer();
-		return null;
-	}
 
-
-
-<Today’sDate>
-
-<User FirstName LastName>
-
-<User Address>
-
-Dear Mr./Ms <FullName>
-
-Thank you for submitting an application for <Application Submitted>. Your application number is 010100 which may be used to track the progress of your application. Your application and supporting document will be reviewed and an email update provided to you within 5 working days.
-
-Regards,
-
-Passport, Immigration and Citizenship
-
-Agency
-	
-	*/
 }
