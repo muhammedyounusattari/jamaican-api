@@ -367,6 +367,7 @@ public class DescentFormServiceImpl implements DescentFormService {
 		String agentId = payload.get("agentId");
 		Profile profile = null;
 		DescentForm descentForm = null;
+		String message = null;
 
 		if (applicantId != null && status != null && agentId !=null) {
 			int applicant = Integer.parseInt(applicantId);
@@ -374,6 +375,7 @@ public class DescentFormServiceImpl implements DescentFormService {
 
 			if (profile != null) {
 				profile.setStatus(FormStatus.getByValue(status).getStatus());
+				profile.setComment(payload.get("comments"));
 				profile = createProfileDAO.save(profile);
 
 				descentForm = descentFormDAO.findBy_id((applicant));
@@ -391,6 +393,13 @@ public class DescentFormServiceImpl implements DescentFormService {
 					}
 				}
 				
+				message = EmailMessageTemplate.getApplicantStatusUpdateMail(profile);
+				try {
+					if (isEmailEnabled.equalsIgnoreCase("true"))
+						notificationConfig.sendMail(new String[] { profile.getEmail() }, subject, message, from);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
 				
 				
 				agent.setApplications(list);

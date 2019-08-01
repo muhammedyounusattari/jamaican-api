@@ -26,7 +26,8 @@ public class DescentFormMapper {
 	private static final Logger LOG = LoggerFactory.getLogger(DescentFormMapper.class);
 
 	//private static String UPLOADED_FOLDER = "/Users/admin/Documents/pica/";
-	private static String UPLOADED_FOLDER = "/Users/admin/Downloads/Kastech workspace/jamaican-citizenship-ui/Kastech workspace/jamaican-citizenship-ui/src/assets/documents/";
+	private static String UPLOADED_FOLDER = "/Users/admin/Downloads/jamaican-citizenship-ui/Kastech workspace/jamaican-citizenship-ui/src/assets/documents";
+//	private static String UPLOADED_FOLDER = "/Users/admin/Downloads/Kastech workspace/jamaican-citizenship-ui/Kastech workspace/jamaican-citizenship-ui/src/assets/documents/";
 
 	public static DescentForm formatPayload(DescentFormHandler descentFormHander) {
 
@@ -133,6 +134,7 @@ public class DescentFormMapper {
 	public static ApplicantDocument saveDocument(String location, MultipartFile file) {
 
 		ApplicantDocument applicantDoc = new ApplicantDocument();
+		
 		String savedLoc = "/assets/documents/"+location+"/";
 		location = UPLOADED_FOLDER + location + "/";
 	 
