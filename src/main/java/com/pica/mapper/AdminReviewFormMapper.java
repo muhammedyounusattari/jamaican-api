@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.pica.model.Agent;
 import com.pica.model.Applicant;
+import com.pica.model.DeskClerk;
 
 public class AdminReviewFormMapper {
 
@@ -65,6 +66,27 @@ public class AdminReviewFormMapper {
 		list2.addAll(list1);
 		System.out.println(list2);
 
+	}
+
+	public static DeskClerk syncDBDeskClerk(DeskClerk desckClerk, List<Applicant> appCodeList) {
+		if(desckClerk == null)
+			return null;
+		List<Applicant> dbApplicant = desckClerk.getApplications();
+		if (dbApplicant == null) {
+			dbApplicant = new ArrayList<Applicant>();
+			desckClerk.setApplications(new ArrayList<Applicant>(appCodeList));
+		} else {
+			
+			ArrayList<Applicant> currentApplicants = desckClerk.getApplications();
+			appCodeList.forEach(applicant->{
+				currentApplicants.add(applicant);
+			});
+			desckClerk.setApplications(currentApplicants);
+			//TODO- need filter applicants
+//			dbApplicant = mergeTwoList(dbApplicant,appCodeList);
+		}
+
+		return desckClerk;
 	}
 
 }

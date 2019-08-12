@@ -127,12 +127,12 @@ public class DescentFormControllerImpl implements DescentFormController {
 	}
 
 	@Override
-	public ResponseEntity<?> getFormForReview(String formType) {
+	public ResponseEntity<?> getFormForReview(String formType,String type) {
 		if (formType == null)
 			return new ResponseEntity<>("formType is missing", HttpStatus.BAD_REQUEST);
 
 		return new ResponseEntity<ResponsePayload>(
-				new ResponsePayload(descentService.getReviewForms(formType), HttpStatus.OK), HttpStatus.OK);
+				new ResponsePayload(descentService.getReviewForms(formType,type), HttpStatus.OK), HttpStatus.OK);
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class DescentFormControllerImpl implements DescentFormController {
 		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getAgents(), HttpStatus.OK),
 				HttpStatus.OK);
 	}
-	
+
 	@Override
 	public ResponseEntity<?> getDeskClerkList() {
 		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getDeskClerk(), HttpStatus.OK),
@@ -153,6 +153,14 @@ public class DescentFormControllerImpl implements DescentFormController {
 			return new ResponseEntity<>("payload is missing", HttpStatus.BAD_REQUEST);
 
 		return new ResponseEntity<Supervisor>(descentService.assignApplicationToAgent(payload), HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> getAssignedToDeskClerk(AssignedApplicationPayload payload) {
+		if (payload == null)
+			return new ResponseEntity<>("payload is missing", HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<Supervisor>(descentService.assignApplicationToDeskClerk(payload), HttpStatus.OK);
 	}
 
 	@Override
@@ -173,10 +181,17 @@ public class DescentFormControllerImpl implements DescentFormController {
 	@Override
 	public ResponseEntity<?> updateApplicantStatus(Map<String, String> payload) {
 
-		if (payload == null)
-			return new ResponseEntity<>("payload is missing", HttpStatus.BAD_REQUEST);
+		String type = payload.get("type");
+		
+		if (payload == null && type !=null)
+			return new ResponseEntity<String>("payload is missing", HttpStatus.BAD_REQUEST);
 
-		return new ResponseEntity<Agent>(descentService.updateApplicantStatus(payload), HttpStatus.OK);
+		if(type.equalsIgnoreCase("deskClerk"))
+			return new ResponseEntity<DeskClerk>(descentService.updateApplicantStatusInDeskClerk(payload), HttpStatus.OK);
+		else if(type.equalsIgnoreCase("agent"))
+			return new ResponseEntity<Agent>(descentService.updateApplicantStatus(payload), HttpStatus.OK);
+		else
+			return new ResponseEntity<DescentForm>(descentService.updateApplicantStatusInProfile(payload), HttpStatus.OK);
 	}
 
 	@Override
@@ -208,25 +223,22 @@ public class DescentFormControllerImpl implements DescentFormController {
 
 	@Override
 	public ResponseEntity<?> getAgentApplicants(String agentId, String formType) {
-		
-		if(agentId == null && formType == null) {
+
+		if (agentId == null && formType == null) {
 			return new ResponseEntity<>("applicantId is missing", HttpStatus.BAD_REQUEST);
 		}
-		
-		return new ResponseEntity<Agent>(descentService.getAgentApplicants(agentId,formType), HttpStatus.OK);
+
+		return new ResponseEntity<Agent>(descentService.getAgentApplicants(agentId, formType), HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<?> getDCApplicants(String agentId, String formType) {
-		
-		if(agentId == null && formType == null) {
+
+		if (agentId == null && formType == null) {
 			return new ResponseEntity<>("applicantId is missing", HttpStatus.BAD_REQUEST);
 		}
-		
-		return new ResponseEntity<DeskClerk>(descentService.getDeskClerkApplicants(agentId,formType), HttpStatus.OK);
+
+		return new ResponseEntity<DeskClerk>(descentService.getDeskClerkApplicants(agentId, formType), HttpStatus.OK);
 	}
 
-
-	
-	
 }

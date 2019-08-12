@@ -58,7 +58,7 @@ public interface DescentFormController {
 	public ResponseEntity<?> getDescentFormData(@RequestBody Map<String, String> payload);
 
 	@RequestMapping(value = DescentFormConstantsURIConstants.GET_FORMS_REVIEW, method = RequestMethod.GET)
-	public ResponseEntity<?> getFormForReview(@PathVariable("formType") String formType);
+	public ResponseEntity<?> getFormForReview(@PathVariable("formType") String formType,@PathVariable("type") String type);
 
 	@RequestMapping(value = DescentFormConstantsURIConstants.GET_AGENTS, method = RequestMethod.GET)
 	public ResponseEntity<?> getAgentsList();
@@ -68,6 +68,9 @@ public interface DescentFormController {
 
 	@RequestMapping(value = DescentFormConstantsURIConstants.ASSIGN_TO_AGENT, method = RequestMethod.POST)
 	public ResponseEntity<?> getAssignedToAgent(@RequestBody AssignedApplicationPayload payload);
+
+	@RequestMapping(value = DescentFormConstantsURIConstants.ASSIGN_TO_DESKCLERK, method = RequestMethod.POST)
+	public ResponseEntity<?> getAssignedToDeskClerk(@RequestBody AssignedApplicationPayload payload);
 
 	@RequestMapping(value = DescentFormConstantsURIConstants.VALIDATE_AGENT, method = RequestMethod.POST)
 	public ResponseEntity<?> getAgentValidate(@RequestBody Profile profile);

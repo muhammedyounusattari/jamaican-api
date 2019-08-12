@@ -253,12 +253,27 @@ public class DescentFormServiceImpl implements DescentFormService {
 	}
 
 	@Override
-	public List<DescentForm> getReviewForms(String formType) {
+	public List<DescentForm> getReviewForms(String formType, String type) {
 		List<Profile> profileList = null;
 		
 		List<String> status = new ArrayList<>();
-		status.add(FormStatus.SUBMITTED.getStatus());
-		status.add(FormStatus.REFFERED.getStatus());
+		
+		if("supervisor".equalsIgnoreCase(type)) {
+			status.add(FormStatus.SUBMITTED.getStatus());
+			status.add(FormStatus.REFFERED.getStatus());
+		}
+		
+		if("localdeskclerk".equalsIgnoreCase(type)) {
+			status.add(FormStatus.SCHEDULE.getStatus());
+		}
+		
+		if("compliancesupervisor".equalsIgnoreCase(type)) {
+			status.add(FormStatus.CS.getStatus());
+		}
+		
+		if("operationsmanager".equalsIgnoreCase(type)) {
+			status.add(FormStatus.OM.getStatus());
+		}
 
 		if (formType.equalsIgnoreCase(PICAApplictions.DPA.toString()))
 			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.DPA.toString(),
@@ -342,11 +357,11 @@ public class DescentFormServiceImpl implements DescentFormService {
 				Profile profile = descent.getProfile();
 				if (profile != null && profile.getEmail() != null) {
 					profile = profileDAO.findBy_Id(profile.getId());
-					profile.setStatus(FormStatus.PROCESSING.getStatus());
+					profile.setStatus(FormStatus.REVIEW.getStatus());
 					profile = profileDAO.save(profile);
 					descent.setProfile(profile);
 				}
-				descent.setStatus(FormStatus.PROCESSING.getStatus());
+				descent.setStatus(FormStatus.REVIEW.getStatus());
 				descentFormDAO.save(descent);
 			});
 			System.out.println();
@@ -361,6 +376,45 @@ public class DescentFormServiceImpl implements DescentFormService {
 		}
 		return null;
 	}
+	
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public Supervisor assignApplicationToDeskClerk(AssignedApplicationPayload payload) {
+		List<Applicant> appCodeList = payload.getAppCodes();
+
+		List<Integer> applicantCodes = AdminReviewFormMapper.getApplicantCodes(payload.getAppCodes());
+		List<DescentForm> applicationList = descentFormDAO.findBy_id(applicantCodes);
+
+		if (applicationList.size() > 0) {
+			DeskClerk deskClerk = deskClerkDAO.findBy_Id(payload.getAgent());
+			deskClerk = deskClerkDAO.save(AdminReviewFormMapper.syncDBDeskClerk(deskClerk, appCodeList));
+
+			applicationList.forEach((descent) -> {
+
+				Profile profile = descent.getProfile();
+				if (profile != null && profile.getEmail() != null) {
+					profile = profileDAO.findBy_Id(profile.getId());
+					profile.setStatus(FormStatus.PROCESSING.getStatus());
+					profile = profileDAO.save(profile);
+					descent.setProfile(profile);
+				}
+				descent.setStatus(FormStatus.PROCESSING.getStatus());
+				descentFormDAO.save(descent);
+			});
+			System.out.println();
+
+			Supervisor superVisor = supervisorDAO.findByAgent_id(payload.getAgent());
+			if (superVisor == null)
+				superVisor = new Supervisor();
+
+			superVisor.setDeskClerk(deskClerk);
+			return supervisorDAO.save(superVisor);
+
+		}
+		return null;
+	}
+	
 
 	@Override
 	public Agent getAgentDetails(Profile profile) {
@@ -376,6 +430,58 @@ public class DescentFormServiceImpl implements DescentFormService {
 		return descentFormDAO.findBy_id(Integer.parseInt(applicantId));
 	}
 
+	
+	@Override
+	public DeskClerk updateApplicantStatusInDeskClerk(Map<String, String> payload) {
+
+		String applicantId = payload.get("applicantId");
+		String status = payload.get("status");
+		String agentId = payload.get("agentId");
+		Profile profile = null;
+		DescentForm descentForm = null;
+		String message = null;
+
+		if (applicantId != null && status != null && agentId !=null) {
+			int applicant = Integer.parseInt(applicantId);
+			profile = profileDAO.findByCustId(applicantId);
+
+			if (profile != null) {
+				profile.setStatus(FormStatus.getByValue(status).getStatus());
+				profile.setComment(payload.get("comments"));
+				profile = profileDAO.save(profile);
+
+				descentForm = descentFormDAO.findBy_id((applicant));
+				descentForm.setProfile(profile);
+				descentForm.setStatus(FormStatus.getByValue(status).getStatus());
+				descentForm = descentFormDAO.save(descentForm);
+				
+			
+				DeskClerk deskClerk = deskClerkDAO.findBy_Id(Integer.parseInt(agentId));
+				List<Applicant> dbList = deskClerk.getApplications();
+				ArrayList<Applicant> list = new ArrayList<>();
+				for(Applicant data:dbList) {
+					if(data.getApplicantId()!= applicant) {
+						list.add(data);
+					}
+				}
+				
+				message = EmailMessageTemplate.getApplicantStatusUpdateMail(profile);
+				try {
+					if (isEmailEnabled.equalsIgnoreCase("true"))
+						notificationConfig.sendMail(new String[] { profile.getEmail() }, subject, message, from);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+				
+				
+				deskClerk.setApplications(list);
+				return deskClerkDAO.save(deskClerk);
+			}
+			
+		}
+		return null;
+	}
+	
 	@Override
 	public Agent updateApplicantStatus(Map<String, String> payload) {
 
@@ -433,7 +539,7 @@ public class DescentFormServiceImpl implements DescentFormService {
 
 		Profile profile = profileDAO.findByAppCode(applicantId);
 		if (profile != null) {
-			profile.setStatus(FormStatus.PAS.getStatus());
+			profile.setStatus(FormStatus.SCHEDULE.getStatus());
 			profile.setTime(payload.get("time"));
 			profile.setDate(payload.get("date"));
 //			profile.setTime(Time.valueOf(payload.get("time")));
@@ -464,10 +570,12 @@ public class DescentFormServiceImpl implements DescentFormService {
 	public Profile validateAppointment(String applicantId) {
 		
 		Profile profile = profileDAO.findByAppCode(applicantId);
-		if(profile.getStatus().equals(FormStatus.PAS.getStatus())){
-			return null;
+		
+		
+		if(profile !=null && profile.getStatus().equals(FormStatus.PAS.getStatus())){
+			return profile;
 		}
-		return profile;
+		return null;
 	}
 
 	@Override
@@ -515,6 +623,34 @@ public class DescentFormServiceImpl implements DescentFormService {
 		return deskClerk;
 	}
 
-	
+	@Override
+	public DescentForm updateApplicantStatusInProfile(Map<String, String> payload) {
+		String applicantId = payload.get("applicantId");
+		String status = payload.get("status");
+
+		Profile profile = null;
+		DescentForm descentForm = null;
+		String message = null;
+
+		if (applicantId != null && status != null) {
+			int applicant = Integer.parseInt(applicantId);
+			profile = profileDAO.findByCustId(applicantId);
+
+			if (profile != null) {
+				profile.setStatus(FormStatus.getByValue(status).getStatus());
+				profile.setComment(payload.get("comments"));
+				profile = profileDAO.save(profile);
+
+				descentForm = descentFormDAO.findBy_id((applicant));
+				descentForm.setProfile(profile);
+				descentForm.setStatus(FormStatus.getByValue(status).getStatus());
+				descentForm = descentFormDAO.save(descentForm);
+
+				return descentForm;
+			}
+		}
+		return null;
+
+	}
 
 }

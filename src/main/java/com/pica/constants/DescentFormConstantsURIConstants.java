@@ -17,7 +17,7 @@ public interface DescentFormConstantsURIConstants {
 
 	// Agent url's
 
-	public static final String GET_FORMS_REVIEW = "/forms-review/{formType}";
+	public static final String GET_FORMS_REVIEW = "/forms-review/{formType}/{type}";
 	public static final String GET_AGENTS = "/load-agents/";
 	public static final String ASSIGN_TO_AGENT = "/assign-to-agent";
 	public static final String VALIDATE_AGENT = "/validate-agent";
@@ -37,5 +37,6 @@ public interface DescentFormConstantsURIConstants {
 	
 	public static final String DC_APPLICANTS = "/deskclerk-applicant/{clerkId}/{formType}";
 	public static final String GET_DESKCLERK = "/load-deskclerk/";
+	public static final String ASSIGN_TO_DESKCLERK = "/assign-to-deskclerk";
 	
 }
