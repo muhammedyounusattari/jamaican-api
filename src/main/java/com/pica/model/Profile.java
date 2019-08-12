@@ -1,5 +1,8 @@
 package com.pica.model;
 
+import java.util.Date;
+import java.sql.Time;
+
 import javax.validation.constraints.NotNull;
 
 //import javax.persistence.GeneratedValue;
@@ -10,66 +13,97 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.pica.commons.PICAApplictions;
 
-@Document(collection="profile")
+@Document(collection = "profile")
 
 public class Profile {
 
 	@Id
 //	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int _id;
-	
+
 	@NotNull(message = "lastname cannot be null")
 	private String lastname;
-	
+
 	private String middlename;
-	
+
 	@NotNull(message = "firstname cannot be null")
 	private String firstname;
-	
-	@NotNull(message="date of birth cannot be null")
+
+	@NotNull(message = "date of birth cannot be null")
 	private String dob;
-	
+
 	@NotNull(message = "place of birth cannot be null")
 	private String pob;
-	
+
 	@NotNull(message = "place of birth cannot be null")
 	private String country;
-	
+
 	@NotNull(message = "email cannot be null")
 	private String email;
-	
+
 	@NotNull(message = "address cannot be null")
 	private String address1;
-	
+
 	@NotNull(message = "address cannot be null")
 	private String address2;
 
 	@NotNull(message = "Zip code cannot be null")
 	private String zip;
-	
+
 	@NotNull(message = "number cannot be null")
 	private String number;
-	
+
 	@NotNull(message = "gender cannot be null")
 	private String gender;
-	
+
 //	@NotNull(message = "password cannot be null")
 	private String password;
-	
+
 	private String base29Code;
-	
+
 	private String appCode;
-	
+
 	private String appliedDate;
-	
+
 	private boolean passwordChanged;
-	
+
 	private PICAApplictions applied;
-	
+
 	private String loginType;
-	
+
 	private String comment;
-	
+
+//	private Time time;
+
+	private String time;
+
+	private String date;
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	/*
+	 * public Date getDate() { return date; }
+	 * 
+	 * public void setDate(Date date) { this.date = date; }
+	 * 
+	 * public Time getTime() { return time; }
+	 * 
+	 * public void setTime(Time time) { this.time = time; }
+	 */
 	public boolean isPasswordChanged() {
 		return passwordChanged;
 	}
@@ -103,9 +137,9 @@ public class Profile {
 	}
 
 	private String custId;
-	
+
 	private String appliedFor;
-	
+
 	public String getAppliedFor() {
 		return appliedFor;
 	}
@@ -115,7 +149,7 @@ public class Profile {
 	}
 
 	private String status;
-	
+
 	public int getId() {
 		return _id;
 	}
@@ -123,8 +157,6 @@ public class Profile {
 	public void setId(int id) {
 		this._id = id;
 	}
-
-	
 
 	public String getLastname() {
 		return lastname;
@@ -174,7 +206,6 @@ public class Profile {
 		this.email = email.toLowerCase();
 	}
 
-
 	public String getNumber() {
 		return number;
 	}
@@ -194,15 +225,15 @@ public class Profile {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	public String getStatus() {
 		return this.status;
 	}
@@ -246,11 +277,11 @@ public class Profile {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	
+
 	public void setApplied(PICAApplictions applied) {
 		this.applied = applied;
 	}
-	
+
 	public PICAApplictions getApplied() {
 		return this.applied;
 	}
@@ -262,13 +293,13 @@ public class Profile {
 	public void setLoginType(String loginType) {
 		this.loginType = loginType;
 	}
-	
+
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
+
 	public String getComment() {
 		return comment;
 	}
-	
+
 }

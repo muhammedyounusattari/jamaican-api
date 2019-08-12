@@ -6,7 +6,7 @@ import java.util.Map;
 public enum FormStatus {
 
 	SUBMITTED("submitted"), PROCESSING("processing"), INCOMPLETE("incomplete"), DECLINED("declined"),
-	REFFERED("reffered"), COMPLETED("completed");
+	REFFERED("reffered"), COMPLETED("completed"), PAS("pas");
 
 	private static final Map<String, FormStatus> map = new HashMap<>();
 

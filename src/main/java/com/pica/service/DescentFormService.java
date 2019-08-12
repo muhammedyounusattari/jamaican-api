@@ -11,10 +11,12 @@ import com.pica.mapper.DescentFormHandler;
 import com.pica.model.Agent;
 import com.pica.model.AllForms;
 import com.pica.model.Profile;
+import com.pica.model.Roles;
 import com.pica.model.Supervisor;
 import com.pica.model.UploadDocuments;
 import com.pica.payloads.AssignedApplicationPayload;
 import com.pica.model.DescentForm;
+import com.pica.model.DeskClerk;
 
 public interface DescentFormService {
 
@@ -51,5 +53,17 @@ public interface DescentFormService {
 	DescentForm getApplicantForm(String applicantId);
 
 	Agent updateApplicantStatus(Map<String, String> payload);
+
+	Profile scheduleAppointment(Map<String, String> payload);
+
+	Profile validateAppointment(String applicantId);
+
+	Roles validateOffical(Roles roles);
+
+	Agent getAgentApplicants(String agentId, String formType);
+
+	DeskClerk getDeskClerkApplicants(String agentId, String formType);
+
+	List<DeskClerk> getDeskClerk();
 
 }

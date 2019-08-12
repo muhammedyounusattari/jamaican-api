@@ -18,7 +18,9 @@ import com.pica.mapper.DescentFormHandler;
 import com.pica.model.Agent;
 import com.pica.model.AllForms;
 import com.pica.model.DescentForm;
+import com.pica.model.DeskClerk;
 import com.pica.model.Profile;
+import com.pica.model.Roles;
 import com.pica.model.Supervisor;
 import com.pica.model.UploadDocuments;
 import com.pica.payloads.AssignedApplicationPayload;
@@ -138,6 +140,12 @@ public class DescentFormControllerImpl implements DescentFormController {
 		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getAgents(), HttpStatus.OK),
 				HttpStatus.OK);
 	}
+	
+	@Override
+	public ResponseEntity<?> getDeskClerkList() {
+		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getDeskClerk(), HttpStatus.OK),
+				HttpStatus.OK);
+	}
 
 	@Override
 	public ResponseEntity<?> getAssignedToAgent(AssignedApplicationPayload payload) {
@@ -170,4 +178,55 @@ public class DescentFormControllerImpl implements DescentFormController {
 
 		return new ResponseEntity<Agent>(descentService.updateApplicantStatus(payload), HttpStatus.OK);
 	}
+
+	@Override
+	public ResponseEntity<?> appointmentScheduled(Map<String, String> payload) {
+
+		if (payload == null)
+			return new ResponseEntity<>("payload is missing", HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<Profile>(descentService.scheduleAppointment(payload), HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> isApplicableForScheduleAppointment(String applicantId) {
+
+		if (applicantId == null)
+			return new ResponseEntity<>("applicantId is missing", HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<Profile>(descentService.validateAppointment(applicantId), HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> validateOfficalLogin(Roles roles) {
+
+		if (roles == null && roles.getUrl() != null && roles.getPassword() != null && roles.getLoginType() == null)
+			return new ResponseEntity<>("applicantId is missing", HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<Roles>(descentService.validateOffical(roles), HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> getAgentApplicants(String agentId, String formType) {
+		
+		if(agentId == null && formType == null) {
+			return new ResponseEntity<>("applicantId is missing", HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<Agent>(descentService.getAgentApplicants(agentId,formType), HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> getDCApplicants(String agentId, String formType) {
+		
+		if(agentId == null && formType == null) {
+			return new ResponseEntity<>("applicantId is missing", HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<DeskClerk>(descentService.getDeskClerkApplicants(agentId,formType), HttpStatus.OK);
+	}
+
+
+	
+	
 }

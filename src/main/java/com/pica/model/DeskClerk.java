@@ -7,12 +7,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class Agent {
+public class DeskClerk {
 
 	private int _id;
 
 	private String name;
 	private ArrayList<Applicant> applications;
+	
 	private String formType;
 
 	public int get_id() {
@@ -49,10 +50,10 @@ public class Agent {
 
 	@Override
 	public String toString() {
-		return "Agent [_id=" + _id + ", name=" + name + ", applications=" + applications + ", formType=" + formType
+		return "DeskClerk [_id=" + _id + ", name=" + name + ", applications=" + applications + ", formType=" + formType
 				+ "]";
 	}
-	
-	
 
+	
+	
 }

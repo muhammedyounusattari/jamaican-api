@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +20,10 @@ import com.pica.model.Profile;
 public class DescentFormMapper {
 
 //	Dependents dependents = null;
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(DescentFormMapper.class);
 
-	//private static String UPLOADED_FOLDER = "/Users/admin/Documents/pica/";
-	private static String UPLOADED_FOLDER = "/Users/admin/Downloads/jamaican-citizenship-ui/Kastech workspace/jamaican-citizenship-ui/src/assets/documents";
-//	private static String UPLOADED_FOLDER = "/Users/admin/Downloads/Kastech workspace/jamaican-citizenship-ui/Kastech workspace/jamaican-citizenship-ui/src/assets/documents/";
+	private static String UPLOADED_FOLDER = "/Users/admin/Downloads/Kastech workspace/jamaican-citizenship-ui/Kastech workspace/jamaican-citizenship-ui/src/assets/documents/";
 
 	public static DescentForm formatPayload(DescentFormHandler descentFormHander) {
 
@@ -134,10 +130,10 @@ public class DescentFormMapper {
 	public static ApplicantDocument saveDocument(String location, MultipartFile file) {
 
 		ApplicantDocument applicantDoc = new ApplicantDocument();
-		
-		String savedLoc = "/assets/documents/"+location+"/";
+
+		String savedLoc = "/assets/documents/" + location + "/";
 		location = UPLOADED_FOLDER + location + "/";
-	 
+
 		byte[] bytes;
 		try {
 			File locate = new File(location);
@@ -148,9 +144,9 @@ public class DescentFormMapper {
 
 			applicantDoc.setFileName(file.getOriginalFilename());
 			applicantDoc.setFilePath(savedLoc + file.getOriginalFilename());
-			
-			LOG.info("file location "+location);
-			LOG.info("file name "+file.getOriginalFilename());
+
+			LOG.info("file location " + location);
+			LOG.info("file name " + file.getOriginalFilename());
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

@@ -21,4 +21,7 @@ public interface CreateProfileDAO extends MongoRepository<Profile, Long>{
 	
 	@Query(value="{'_id':?0}")
 	Profile findBy_Id(Integer _id);
+	
+	
+	Profile findByAppCode(String applicantId);
 }

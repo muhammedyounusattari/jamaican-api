@@ -23,5 +23,19 @@ public interface DescentFormConstantsURIConstants {
 	public static final String VALIDATE_AGENT = "/validate-agent";
 	public static final String APPLICANT_DETAIL = "/applicant-detail/{applicantId}";
 	public static final String UPDATE_STATUS = "/update-applicant";
+	public static final String AGENT_APPLICANTS = "/agent-applicant/{agentId}/{formType}";
+	
 
+	//Appointment
+	
+	public static final String SCHEDULE_APPOINTMENT = "/schedule-appointment";
+	public static final String VALIDATE_BEFORE_APPOINTMENT = "/validate-schedule-appointment/{applicantId}/";
+	public static final String VALIDATE_OFFICAL_LOGIN = "/validate-offical-login";
+	
+	
+	//DeskClerk
+	
+	public static final String DC_APPLICANTS = "/deskclerk-applicant/{clerkId}/{formType}";
+	public static final String GET_DESKCLERK = "/load-deskclerk/";
+	
 }

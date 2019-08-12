@@ -15,6 +15,7 @@ import com.pica.constants.DescentFormConstantsURIConstants;
 import com.pica.mapper.DescentFormHandler;
 import com.pica.model.AllForms;
 import com.pica.model.Profile;
+import com.pica.model.Roles;
 import com.pica.model.UploadDocuments;
 import com.pica.payloads.AssignedApplicationPayload;
 import com.pica.model.DescentForm;
@@ -61,6 +62,9 @@ public interface DescentFormController {
 
 	@RequestMapping(value = DescentFormConstantsURIConstants.GET_AGENTS, method = RequestMethod.GET)
 	public ResponseEntity<?> getAgentsList();
+	
+	@RequestMapping(value = DescentFormConstantsURIConstants.GET_DESKCLERK, method = RequestMethod.GET)
+	public ResponseEntity<?> getDeskClerkList();
 
 	@RequestMapping(value = DescentFormConstantsURIConstants.ASSIGN_TO_AGENT, method = RequestMethod.POST)
 	public ResponseEntity<?> getAssignedToAgent(@RequestBody AssignedApplicationPayload payload);
@@ -73,4 +77,21 @@ public interface DescentFormController {
 
 	@RequestMapping(value = DescentFormConstantsURIConstants.UPDATE_STATUS, method = RequestMethod.POST)
 	public ResponseEntity<?> updateApplicantStatus(@RequestBody Map<String, String> payload);
+	
+	@RequestMapping(value = DescentFormConstantsURIConstants.SCHEDULE_APPOINTMENT, method= RequestMethod.POST )
+	public ResponseEntity<?> appointmentScheduled(@RequestBody Map<String,String> payload);
+	
+	@RequestMapping(value = DescentFormConstantsURIConstants.VALIDATE_BEFORE_APPOINTMENT, method = RequestMethod.GET)
+	public ResponseEntity<?> isApplicableForScheduleAppointment(@PathVariable("applicantId") String applicantId);
+	
+	@RequestMapping(value = DescentFormConstantsURIConstants.VALIDATE_OFFICAL_LOGIN, method = RequestMethod.POST)
+	public ResponseEntity<?> validateOfficalLogin(@RequestBody Roles roles);
+
+	@RequestMapping(value= DescentFormConstantsURIConstants.AGENT_APPLICANTS, method=RequestMethod.GET)
+	public ResponseEntity<?> getAgentApplicants(@PathVariable("agentId") String agentId, @PathVariable("formType") String formType);
+
+	@RequestMapping(value= DescentFormConstantsURIConstants.DC_APPLICANTS, method=RequestMethod.GET)
+	public ResponseEntity<?> getDCApplicants(@PathVariable("clerkId") String agentId, @PathVariable("formType") String formType);
+
 }
+
