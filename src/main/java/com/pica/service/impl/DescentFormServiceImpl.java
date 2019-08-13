@@ -275,6 +275,10 @@ public class DescentFormServiceImpl implements DescentFormService {
 			status.add(FormStatus.OM.getStatus());
 		}
 
+		if("director".equalsIgnoreCase(type)) {
+			status.add(FormStatus.DIRECTOR.getStatus());
+		}
+		
 		if (formType.equalsIgnoreCase(PICAApplictions.DPA.toString()))
 			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.DPA.toString(),
 					status);
