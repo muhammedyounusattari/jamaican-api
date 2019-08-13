@@ -13,4 +13,7 @@ public interface SupervisorDAO extends MongoRepository<Supervisor, Long> {
 //	@Query("{agent._id:?0")
 	@Query(value = "{ 'agent._id' : ?0 }")
 	public Supervisor findByAgent_id(Integer id);
+	
+	@Query(value = "{ 'deskClerk._id' : ?0 }")
+	public Supervisor findByDeskClerk_id(Integer id);
 }

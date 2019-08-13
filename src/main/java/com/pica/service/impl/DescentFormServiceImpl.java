@@ -80,8 +80,8 @@ public class DescentFormServiceImpl implements DescentFormService {
 	@Autowired
 	private RolesDAO rolesDAO;
 
-	@Value("${email.enabled}")
-	private String isEmailEnabled;
+	//@Value("${email.enabled}")
+	private String isEmailEnabled="true";;
 
 	@Override
 	public List<AllForms> getAllPicaForms() {
@@ -375,7 +375,8 @@ public class DescentFormServiceImpl implements DescentFormService {
 				superVisor = new Supervisor();
 
 			superVisor.setAgent(agent);
-			return supervisorDAO.save(superVisor);
+			//return supervisorDAO.save(superVisor);
+			return superVisor;
 
 		}
 		return null;
@@ -408,12 +409,13 @@ public class DescentFormServiceImpl implements DescentFormService {
 			});
 			System.out.println();
 
-			Supervisor superVisor = supervisorDAO.findByAgent_id(payload.getAgent());
+			Supervisor superVisor = supervisorDAO.findByDeskClerk_id(payload.getAgent());
 			if (superVisor == null)
 				superVisor = new Supervisor();
 
-			superVisor.setDeskClerk(deskClerk);
-			return supervisorDAO.save(superVisor);
+			//superVisor.setDeskClerk(deskClerk);
+			//return supervisorDAO.save(superVisor);
+			return superVisor;
 
 		}
 		return null;
