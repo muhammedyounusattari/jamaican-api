@@ -69,7 +69,7 @@ public class EmailMessageTemplate {
 	public static String getApplicantStatusUpdateMail(Profile profile) {
 		String status = profile.getStatus();
 
-		if (status.equals(FormStatus.COMPLETED.getStatus())) {
+		if (status.equals(FormStatus.PAS.getStatus())) {
 			return applicantMail.onCompleted(profile);
 		} else if (status.equals(FormStatus.INCOMPLETE.getStatus())) {
 			return applicantMail.onIncomplete(profile);
