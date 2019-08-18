@@ -370,13 +370,14 @@ public class DescentFormServiceImpl implements DescentFormService {
 			});
 			System.out.println();
 
-			Supervisor superVisor = supervisorDAO.findByAgent_id(payload.getAgent());
-			if (superVisor == null)
-				superVisor = new Supervisor();
+			Supervisor supervisor = new Supervisor();
+//			Supervisor superVisor = supervisorDAO.findByAgent_id(payload.getAgent());
+//			if (superVisor == null)
+//				superVisor = new Supervisor();
 
-			superVisor.setAgent(agent);
+//			superVisor.setAgent(agent);
 			//return supervisorDAO.save(superVisor);
-			return superVisor;
+			return supervisor;
 
 		}
 		return null;
@@ -409,9 +410,11 @@ public class DescentFormServiceImpl implements DescentFormService {
 			});
 			System.out.println();
 
-			Supervisor superVisor = supervisorDAO.findByDeskClerk_id(payload.getAgent());
-			if (superVisor == null)
-				superVisor = new Supervisor();
+			Supervisor superVisor = new Supervisor();
+			// supervisorDAO.findByDeskClerk_id(payload.getAgent());
+			//Need to remove supervisor table
+//			if (superVisor == null)
+//				superVisor = new Supervisor();
 
 			//superVisor.setDeskClerk(deskClerk);
 			//return supervisorDAO.save(superVisor);
@@ -556,6 +559,15 @@ public class DescentFormServiceImpl implements DescentFormService {
 			descentForm.setProfile(profile);
 
 			descentFormDAO.save(descentForm);
+			
+			try {
+			message = EmailMessageTemplate.getApplicantStatusUpdateMail(profile);
+
+			if (isEmailEnabled.equalsIgnoreCase("true"))
+				notificationConfig.sendMail(new String[] { profile.getEmail() }, subject, message, "dummy");
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return profile;
 
@@ -608,6 +620,12 @@ public class DescentFormServiceImpl implements DescentFormService {
 		}
 		
 		LOG.info("agentId "+agentId+" has following list of applicant "+agent.toString());
+		if(agent.getApplications().size()>0) {
+			
+//			agent.getApplications()agent.fo
+			
+//			List<Profile> profileList = profileDAO.findByAppCodeAndStatus(agent.getApplications(), FormStatus.REVIEW.getStatus());
+		}
 		return agent;
 	}
 

@@ -83,6 +83,8 @@ public class EmailMessageTemplate {
 			return applicantMail.onReffered(profile);
 		} else if (status.equals(FormStatus.SUBMITTED.getStatus())) {
 			return applicantMail.onReffered(profile);
+		} else if(status.equals(FormStatus.SCHEDULE.getStatus())){
+			return applicantMail.confirmedAppointment(profile);
 		}
 
 		else {

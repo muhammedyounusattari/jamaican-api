@@ -1,8 +1,8 @@
 package com.pica.constants;
 
-public interface DescentFormConstantsURIConstants {
+public interface JamaicanURIConstants {
 
-	public static final String HOME = "/v1/descent-form";
+	public static final String HOME = "/v1/jamaican";
 	public static final String ALL_FORMS = "/all-forms";
 	public static final String CREATE_PROFILE = "/create-profile";
 	public static final String SUBMIT_DESCENT_FORM = "/submit-descent-form";
