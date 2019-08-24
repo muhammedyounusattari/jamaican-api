@@ -32,10 +32,10 @@ db.getCollection('deskClerk').insert({_id:9804,name:'Good Man'})
 
 
 db.createCollection("supervisor");
-db.getCollection('supervisor').insert({_id:1,name:'Sam James'})
-db.getCollection('supervisor').insert({_id:2,name:'James Bond'})
-db.getCollection('supervisor').insert({_id:3,name:'Micheal John'})
-db.getCollection('supervisor').insert({_id:4,name:'John Bergh'})
+---db.getCollection('supervisor').insert({_id:1,name:'Sam James'})
+--db.getCollection('supervisor').insert({_id:2,name:'James Bond'})
+--db.getCollection('supervisor').insert({_id:3,name:'Micheal John'})
+--db.getCollection('supervisor').insert({_id:4,name:'John Bergh'})
 
 
 db.createCollection('roles');

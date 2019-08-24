@@ -33,14 +33,14 @@ public class ApplicantManagementEmailTemplate {
 
 		message.append(LocalDate.now());
 		message.append("<br/><br/>");
-		message.append(profile.getFirstname() + "  " + profile.getLastname() + "<br/><br/>");
+		message.append(profile.getFirstname() + "  " + profile.getLastname() + "<br/>");
 		message.append(profile.getAddress1() + "," + profile.getAddress2() + "<br/><br/>");
 		message.append("Dear Mr./Ms " + profile.getLastname() + "," + "<br/><br/>");
 
 		message.append("Thank you for applying for Citizenship by Descent. Your application <code>"
 				+ profile.getCustId()
 				+ "</code> has been reviewed, however your application is deemed incomplete. Please review the reason below:");
-		message.append("<br/><br/>" + profile.getComment());
+		message.append("<br/><br/>" + profile.getComment()+"<br/>");
 		message.append("Regards,<br/>");
 		message.append("Passport, Immigration and Citizenship<br/>");
 		message.append("Agency");
@@ -66,7 +66,7 @@ public class ApplicantManagementEmailTemplate {
 
 		message.append(LocalDate.now());
 		message.append("<br/><br/>");
-		message.append(profile.getFirstname() + "  " + profile.getLastname() + "<br/><br/>");
+		message.append(profile.getFirstname() + "  " + profile.getLastname() + "<br/>");
 		message.append(profile.getAddress1() + "," + profile.getAddress2() + "<br/><br/>");
 		message.append("Dear Mr./Ms " + profile.getLastname() + "," + "<br/><br/>");
 		message.append(
@@ -94,7 +94,7 @@ public class ApplicantManagementEmailTemplate {
 
 		message.append(LocalDate.now());
 		message.append("<br/><br/>");
-		message.append(profile.getFirstname() + "  " + profile.getLastname() + "<br/><br/>");
+		message.append(profile.getFirstname() + "  " + profile.getLastname() + "<br/>");
 		message.append(profile.getAddress1() + "," + profile.getAddress2() + "<br/><br/>");
 		message.append("<center><u>Appointment Confirmation</u></center><br/>");
 		message.append("Dear Mr./Ms " + profile.getLastname() + "," + "<br/><br/>");

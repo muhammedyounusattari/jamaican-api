@@ -41,7 +41,7 @@ public class EmailMessageTemplate {
 
 		message.append(LocalDate.now());
 		message.append("<br/><br/>");
-		message.append(profile.getFirstname() + "  " + profile.getLastname() + "<br/><br/>");
+		message.append(profile.getFirstname() + "  " + profile.getLastname() + "<br/>");
 		message.append(profile.getAddress1() + "," + profile.getAddress2() + "<br/><br/>");
 		message.append("Dear Mr./Ms " + profile.getLastname() + "," + "<br/><br/>");
 		message.append("Thank you for submitting an application for Descent Application. Your application number is "
