@@ -27,6 +27,7 @@ import com.pica.dao.AllFormsDAO;
 import com.pica.dao.CreateProfileDAO;
 import com.pica.dao.DescentFormDAO;
 import com.pica.dao.DeskClerkDAO;
+import com.pica.dao.NaturalizationAliensDAO;
 import com.pica.dao.RolesDAO;
 import com.pica.dao.SequenceDAO;
 import com.pica.dao.SupervisorDAO;
@@ -40,9 +41,12 @@ import com.pica.model.Applicant;
 import com.pica.model.ApplicantDocument;
 import com.pica.model.DescentForm;
 import com.pica.model.DeskClerk;
+import com.pica.model.Forms;
 import com.pica.model.Profile;
+
 import com.pica.model.Roles;
 import com.pica.model.Supervisor;
+import com.pica.model.natural.alien.NaturalizationAliens;
 import com.pica.payloads.AssignedApplicationPayload;
 import com.pica.service.DescentFormService;
 
@@ -79,6 +83,9 @@ public class DescentFormServiceImpl implements DescentFormService {
 	
 	@Autowired
 	private RolesDAO rolesDAO;
+	
+	@Autowired
+	private NaturalizationAliensDAO naturalizationDAO;
 
 	//@Value("${email.enabled}")
 	private String isEmailEnabled="true";;
@@ -129,24 +136,44 @@ public class DescentFormServiceImpl implements DescentFormService {
 	@Override
 	public DescentForm submitDescentApplication(DescentFormHandler descentFormHandler) {
 		DescentForm descentForm = DescentFormMapper.formatPayload(descentFormHandler);
-		DescentForm descentFormDb = descentFormDAO.findByProfileEmail(descentForm.getProfile().getEmail());
+		
+				DescentForm descentFormDb = descentFormDAO.findByProfileEmail(descentForm.getProfile().getEmail());
+				Profile profileDb = profileDAO.findByEmail(descentForm.getProfile().getEmail());
+				profileDb = DescentFormMapper.syncProfileForm(descentForm.getProfile(), profileDb);
+				
 
-		Profile profileDb = profileDAO.findByEmail(descentForm.getProfile().getEmail());
-		profileDb = DescentFormMapper.syncProfileForm(descentForm.getProfile(), profileDb);
 
-		if (descentFormDb != null) {
-			descentFormDb.setProfile(profileDb);
-			descentForm = DescentFormMapper.syncDescentForm(descentForm, descentFormDb);
-			// descentForm.getProfile().setPassword(descentFormHandler.getPassword());
-			profileDAO.save(descentForm.getProfile());
-			return descentFormDAO.save(descentForm);
-		}
+				if (descentFormDb != null) {
+					descentFormDb.setProfile(profileDb);
+					descentForm = DescentFormMapper.syncDescentForm(descentForm, descentFormDb);
+					
+					// descentForm.getProfile().setPassword(descentFormHandler.getPassword());
+					profileDAO.save(descentForm.getProfile());
+					return descentFormDAO.save(descentForm);
+				}
 
-		descentForm.setId((int) sequenceDAO.getNextSequenceIdProfile(HOSTING));
-		// profileDb.setPassword(descentFormHandler.getPassword());
-		descentForm.setProfile(profileDAO.save(profileDb));
-		return descentFormDAO.save(descentForm);
-
+				descentForm.setId((int) sequenceDAO.getNextSequenceIdProfile(HOSTING));
+				// profileDb.setPassword(descentFormHandler.getPassword());
+				ArrayList<Forms> forms = new ArrayList<Forms>();
+				Forms forms1 = new Forms();
+				forms1.setFormAppCode(descentForm.getProfile().getAppCode());
+				forms1.setFormStatus(descentForm.getProfile().getStatus());
+				forms1.setFormName(PICAApplictions.DPA.getApplication());
+				forms.add(forms1);
+				
+				
+				if(profileDb.getForms() != null) {
+					 profileDb.getForms().addAll(forms);
+					 
+				}else {
+					 profileDb.setForms(forms );
+				}
+				descentForm.getProfile().setForms(forms);;
+				descentForm.setProfile(profileDAO.save(profileDb));
+				return descentFormDAO.save(descentForm);
+			
+		
+		
 	}
 
 	@Override

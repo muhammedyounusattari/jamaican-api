@@ -1,6 +1,8 @@
 package com.pica.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.sql.Time;
 
 import javax.validation.constraints.NotNull;
@@ -12,6 +14,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.pica.commons.PICAApplictions;
+import com.pica.mapper.DescentFormHandler;
 
 @Document(collection = "profile")
 
@@ -62,6 +65,20 @@ public class Profile {
 	private String base29Code;
 
 	private String appCode;
+	
+	private ArrayList<Forms> forms;
+
+	
+	
+
+
+	public ArrayList<Forms> getForms() {
+		return forms;
+	}
+
+	public void setForms(ArrayList<Forms> forms) {
+		this.forms = forms;
+	}
 
 	private String appliedDate;
 
@@ -78,6 +95,13 @@ public class Profile {
 	private String time;
 
 	private String date;
+	
+	
+	
+	
+	
+
+
 
 	public String getTime() {
 		return time;
@@ -302,4 +326,22 @@ public class Profile {
 		return comment;
 	}
 
+
+
+
+	
+	
 }
+
+
+
+
+
+
+
+
+	
+	
+	
+
+

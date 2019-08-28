@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import com.pica.model.Applicant;
 import com.pica.model.ApplicantDocument;
 import com.pica.model.Dependents;
 import com.pica.model.DescentForm;
+import com.pica.model.Forms;
 import com.pica.model.Profile;
 
 public class DescentFormMapper {
@@ -29,7 +31,7 @@ public class DescentFormMapper {
 
 		DescentForm descentForm = new DescentForm();
 //		descentForm.setId(id);
-
+		
 		Profile profile = getUserProfile(descentFormHander);
 		Dependents father = getFatherDetails(descentFormHander);
 		Dependents mother = getMotherDetails(descentFormHander);
@@ -42,7 +44,7 @@ public class DescentFormMapper {
 		descentForm.setFather(father);
 		descentForm.setMother(mother);
 		descentForm.setPaternalFather(paternalFather);
-		descentForm.setPaternalMother(paternalMother);
+		descentForm.setPaternalMother(paternalMother); 
 		descentForm.setMaternalFather(maternalFather);
 		descentForm.setMaternalMother(maternalMother);
 
@@ -51,6 +53,9 @@ public class DescentFormMapper {
 
 	private static Profile getUserProfile(DescentFormHandler descentFormHander) {
 		Profile profile = new Profile();
+		
+		
+		ArrayList<Forms> forms = getForms(descentFormHander); 
 		profile.setId(descentFormHander.getId());
 		profile.setFirstname(descentFormHander.getFirstname());
 		profile.setLastname(descentFormHander.getLastname());
@@ -59,16 +64,21 @@ public class DescentFormMapper {
 		profile.setAddress2(descentFormHander.getAddress2());
 		profile.setZip(descentFormHander.getZip());
 		profile.setCountry(descentFormHander.getCountry());
-
 		profile.setDob(descentFormHander.getDob());
 		profile.setNumber(descentFormHander.getNumber());
 		profile.setEmail(descentFormHander.getEmail());
 		profile.setGender(descentFormHander.getGender());
 		profile.setPob(descentFormHander.getPob());
-
+		profile.setForms(forms);
 		return profile;
 	}
-
+private static ArrayList<Forms> getForms(DescentFormHandler descentFormHander){
+	Forms forms = new Forms();
+	forms.setFormAppCode(descentFormHander.getFormAppCode());
+	forms.setFormStatus(descentFormHander.getFormStatus());
+	return null;
+	
+}
 	private static Dependents getPaternalMotherDetails(DescentFormHandler descentFormHander) {
 		Dependents dependents = new Dependents();
 		dependents.setFirstName(descentFormHander.getPfirstname2());
