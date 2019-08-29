@@ -8,12 +8,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pica.dto.NaturalizationAliensDto;
 import com.pica.model.natural.alien.NaturalizationAliens;
 import com.pica.service.NaturalizationAliensService;
 import com.pica.web.NaturalizationAliensController;
 
+@RestController
 public class NaturalizationAliensControllerImpl implements NaturalizationAliensController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(NaturalizationAliensControllerImpl.class);
@@ -22,13 +25,13 @@ public class NaturalizationAliensControllerImpl implements NaturalizationAliensC
 	private NaturalizationAliensService naturalizationService;
 
 	@Override
-	public ResponseEntity<?> submitNaturalizationAliens(@RequestBody NaturalizationAliens naturalizationAliens) {
+	public ResponseEntity<?> submitNaturalizationAliens(@RequestBody NaturalizationAliensDto naturalizationAliensDto) {
 		LOG.info("inside submitNaturalizationAliens NaturalizationAliensControllerImpl");
-		if (naturalizationAliens == null)
+		if (naturalizationAliensDto == null)
 			return new ResponseEntity<>("request payload is missing", HttpStatus.BAD_REQUEST);
 
 		NaturalizationAliens naturializationAliens = naturalizationService
-				.submitNaturalizationAliens(naturalizationAliens);
+				.submitNaturalizationAliens(naturalizationAliensDto);
 		return new ResponseEntity<>(naturializationAliens, HttpStatus.OK);
 	}
 

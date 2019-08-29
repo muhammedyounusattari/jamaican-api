@@ -39,4 +39,9 @@ public interface JamaicanURIConstants {
 	public static final String GET_DESKCLERK = "/load-deskclerk/";
 	public static final String ASSIGN_TO_DESKCLERK = "/assign-to-deskclerk";
 	
+	
+	//Naturalisation form
+	public static final String SUBMIT_NATURALISATION_FORM = "/submit-naturalisation-form";
+	public static final String NATURRALISATION_FORM_UPLOAD = "/naturalisation-form-documents/{userId}/";
+	
 }

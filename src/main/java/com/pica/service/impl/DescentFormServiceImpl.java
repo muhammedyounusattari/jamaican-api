@@ -34,10 +34,12 @@ import com.pica.mapper.AdminReviewFormMapper;
 import com.pica.mapper.DescentFormHandler;
 import com.pica.mapper.DescentFormMapper;
 import com.pica.mapper.EmailMessageTemplate;
+import com.pica.mapper.PICAMapper;
 import com.pica.model.Agent;
 import com.pica.model.AllForms;
 import com.pica.model.Applicant;
 import com.pica.model.ApplicantDocument;
+import com.pica.model.Application;
 import com.pica.model.DescentForm;
 import com.pica.model.DeskClerk;
 import com.pica.model.Profile;
@@ -106,6 +108,9 @@ public class DescentFormServiceImpl implements DescentFormService {
 		profile.setPassword(PicaStringGenerator.generatePassword());
 
 		try {
+			if(profileDAO.findByEmail(profile.getEmail())!=null) {
+				return null;
+			}
 			profile = profileDAO.save(profile);
 			message = EmailMessageTemplate.getProfileMessageTemplate(profile);
 
@@ -166,6 +171,14 @@ public class DescentFormServiceImpl implements DescentFormService {
 				profile.setAppCode(appCode);
 				profile.setBase29Code(base29Code);
 				profile.setCustId(custId);
+				
+				
+				Application application = new Application(PICAApplictions.DPA.getApplication(),
+						FormStatus.SUBMITTED.getStatus(), appCode , custId , base29Code);
+				
+				//profile.setAppliedFor(PICAMapper.getAppliedForPayload(application,profile.getAppliedFor()));
+				
+				
 				profile.setAppliedFor(PICAApplictions.DPA.getApplication());
 				profile.setApplied(PICAApplictions.DPA);
 

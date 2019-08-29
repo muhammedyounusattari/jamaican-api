@@ -1,5 +1,7 @@
 package com.pica.web.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pica.mapper.DescentFormHandler;
 import com.pica.model.Agent;
 import com.pica.model.AllForms;
@@ -27,6 +30,8 @@ import com.pica.payloads.AssignedApplicationPayload;
 import com.pica.payloads.ResponsePayload;
 import com.pica.service.DescentFormService;
 import com.pica.web.DescentFormController;
+
+import lombok.Data;
 
 @RestController
 public class DescentFormControllerImpl implements DescentFormController {
@@ -240,5 +245,65 @@ public class DescentFormControllerImpl implements DescentFormController {
 
 		return new ResponseEntity<DeskClerk>(descentService.getDeskClerkApplicants(agentId, formType), HttpStatus.OK);
 	}
+	
+	public static void main(String[] args)throws Exception {
+		Map<String,Application> map = new HashMap<>();
+		Application application1 = new Application("one","teo","three","four","five");
+		map.put("dpa", application1);
+		map.put("npa", application1);
+		map.put("rr", application1);
+		map.put("rrr", application1);
+		
+		List<Application> appList = new ArrayList<>();
+		appList.add(application1);
+		appList.add(application1);
+		appList.add(application1);
+		
+		String str = new ObjectMapper().writeValueAsString(appList);
+		
+		//String str = new ObjectMapper().writeValueAsString(map);
+		System.out.println(str);
+		
+	}
+	
+	
 
+}
+
+@Data
+class Application{
+	final String type;
+	final String status;
+	final String appCode;
+	final String custId;
+	final String base29Code;
+	
+	
+	
+	public Application(String type, String status, String appCode, String custId, String base29Code) {
+		super();
+		this.type = type;
+		this.status = status;
+		this.appCode = appCode;
+		this.custId = custId;
+		this.base29Code = base29Code;
+	}
+	public String getType() {
+		return type;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public String getAppCode() {
+		return appCode;
+	}
+	public String getCustId() {
+		return custId;
+	}
+	public String getBase29Code() {
+		return base29Code;
+	}
+	
+	
+	
 }

@@ -6,6 +6,8 @@ db.sequence.insert({_id: "hosting",seq: 0}) //generates a sequence for profile
 db.descentFormSequence.insert({_id: "hosting",seq: 171812}) //generates a sequence for profile
 db.profile.createIndex({"email":1},{unique:true});
 db.descentForm.createIndex({"profile.email":1},{unique:true});
+db.naturalisation.createIndex({"profile.email":1},{unique:true});
+
 
 --db.agentSequence.insert({_id:"hosting",seq:1});
 --db.agent.createIndex({"id":1},{unique:true});

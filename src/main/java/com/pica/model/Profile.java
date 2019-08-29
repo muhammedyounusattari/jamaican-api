@@ -1,8 +1,6 @@
 package com.pica.model;
 
-import java.util.Date;
-import java.sql.Time;
-
+import java.util.List;
 import javax.validation.constraints.NotNull;
 
 //import javax.persistence.GeneratedValue;
@@ -14,7 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.pica.commons.PICAApplictions;
 
 @Document(collection = "profile")
-
 public class Profile {
 
 	@Id
@@ -138,6 +135,8 @@ public class Profile {
 
 	private String custId;
 
+	private List<Application> appliedForApplication;
+	
 	private String appliedFor;
 
 	public String getAppliedFor() {
@@ -146,6 +145,16 @@ public class Profile {
 
 	public void setAppliedFor(String appliedFor) {
 		this.appliedFor = appliedFor;
+	}
+
+	
+
+	public List<Application> getAppliedForApplication() {
+		return appliedForApplication;
+	}
+
+	public void setAppliedForApplication(List<Application> appliedForApplication) {
+		this.appliedForApplication = appliedForApplication;
 	}
 
 	private String status;

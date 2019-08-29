@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import com.pica.commons.FormStatus;
 import com.pica.model.DescentForm;
 import com.pica.model.Profile;
+import com.pica.model.natural.alien.NaturalizationAliens;
 import com.pica.notification.client.ApplicantManagementEmailTemplate;
 
 public class EmailMessageTemplate {
@@ -38,6 +39,26 @@ public class EmailMessageTemplate {
 	public static String getDescentApplicationMessageTemplate(DescentForm descentForm) {
 		StringBuffer message = new StringBuffer();
 		Profile profile = descentForm.getProfile();
+
+		message.append(LocalDate.now());
+		message.append("<br/><br/>");
+		message.append(profile.getFirstname() + "  " + profile.getLastname() + "<br/>");
+		message.append(profile.getAddress1() + "," + profile.getAddress2() + "<br/><br/>");
+		message.append("Dear Mr./Ms " + profile.getLastname() + "," + "<br/><br/>");
+		message.append("Thank you for submitting an application for Descent Application. Your application number is "
+				+ profile.getAppCode()
+				+ " which may be used to track the progress of your application. Your application and supporting document will be reviewed and an email update provided to you within 5 working days.<br/><br/>");
+		message.append("Regards,<br/>");
+		message.append("Passport, Immigration and Citizenship<br/>");
+		message.append("Agency");
+		return new String(message);
+
+	}
+	
+	
+	public static String getDescentApplicationMessageTemplate(NaturalizationAliens naturalizationAliens) {
+		StringBuffer message = new StringBuffer();
+		Profile profile = naturalizationAliens.getProfile();
 
 		message.append(LocalDate.now());
 		message.append("<br/><br/>");
