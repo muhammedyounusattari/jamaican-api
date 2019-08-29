@@ -9,6 +9,7 @@ public interface JamaicanURIConstants {
 	
 	public static final String SUBMIT_NATURALISATION_FORM = "/submit-naturalisation-form";
 	public static final String GET_NATURAL_FORM = "/natural-form/{email}/";
+	public static final String NATURALISATION_FORM_UPLOAD = "/naturalisation-form-documents/{userId}";
 	public static final String LOGIN = "/login";
 	public static final String DESCENT_DOC_UPLOAD = "/descent-form-documents/{userId}/";
 	public static final String VALIDATE_EMAIL = "/validate-email/{email}/";

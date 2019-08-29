@@ -1,7 +1,10 @@
 package com.pica.model.natural.alien;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.pica.model.ApplicantDocument;
 import com.pica.model.Profile;
 
 import lombok.Data;
@@ -22,6 +25,10 @@ public class NaturalizationAliens {
 	private Section8 section8;
 	private Section9 section9;
 	private Section10 section10;
+	private List<ApplicantDocument> documents;
+	private String appliedDate;
+
+	private String status;
 	
 	
 	public int get_id() {
@@ -96,6 +103,31 @@ public class NaturalizationAliens {
 	public void setSection10(Section10 section10) {
 		this.section10 = section10;
 	}
+	
+	public List<ApplicantDocument> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<ApplicantDocument> documents) {
+		this.documents = documents;
+	}
+	
+	public String getAppliedDate() {
+		return appliedDate;
+	}
+
+	public void setAppliedDate(String appliedDate) {
+		this.appliedDate = appliedDate;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return this.status;
+	}
+	
 	
 	@Data
 	public static class Section1{
