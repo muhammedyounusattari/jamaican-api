@@ -36,6 +36,8 @@ public class DescentFormHandler {
 	private String address1;
 	
 	private String address2;
+	private String FormStatus;
+	private String FormAppCode;
 	
 	private String country;
 	
@@ -409,5 +411,22 @@ public class DescentFormHandler {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
+
+	public String getFormStatus() {
+		return FormStatus;
+	}
+
+	public void setFormStatus(String formStatus) {
+		FormStatus = formStatus;
+	}
+
+	public String getFormAppCode() {
+		return FormAppCode;
+	}
+
+	public void setFormAppCode(String formAppCode) {
+		FormAppCode = formAppCode;
+	}
+	
 
 }
