@@ -68,13 +68,17 @@ public class NaturalizationAliensServiceImpl implements NaturalizationAliensServ
 	@Override
 	public NaturalizationAliens submitNaturalizationAliens(NaturalizationAliensDto naturalizationAliensDTO) {
 		
+		if(naturalizationAliensDTO.getEmail()==null || naturalizationAliensDTO.getEmail()=="") {
+			return null;
+		}
+		
 		LOG.info(("inside submitNaturalizationAliens of " + this.getClass().getName()));
 
 		NaturalizationAliens naturalizationAliensDb = naturalizationDAO
 				.findByProfileEmail(naturalizationAliensDTO.getEmail());
 
-		if (naturalizationAliensDb != null && naturalizationAliensDb.getProfile().getStatus()!=null)
-			return null;
+		/*if (naturalizationAliensDb != null && naturalizationAliensDb.getProfile().getStatus()!=null)
+			return null;*/
 
 		NaturalizationAliens naturalizationAliens = NaturalizationAliens.builder(naturalizationAliensDTO);
 
@@ -152,7 +156,7 @@ public class NaturalizationAliensServiceImpl implements NaturalizationAliensServ
 
 				subject = "Descent Application Form status ";
 				message = EmailMessageTemplate.getDescentApplicationMessageTemplate(naturalizationAliens);
-				if (isEmailEnabled.equalsIgnoreCase("true"))
+				if (!isEmailEnabled.equalsIgnoreCase("true"))
 					notificationConfig.sendMail(new String[] { email }, subject, message, from);
 //				}
 
@@ -163,8 +167,6 @@ public class NaturalizationAliensServiceImpl implements NaturalizationAliensServ
 		}
 		return naturalizationAliens;
 	
-
-		
 	}
 
 }

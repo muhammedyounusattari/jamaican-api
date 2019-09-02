@@ -36,12 +36,12 @@ public class NaturalizationAliensControllerImpl implements NaturalizationAliensC
 	}
 
 	@Override
-	public ResponseEntity<?> uploadFile(@PathVariable("userId") String userId, @RequestParam("file") MultipartFile file,
+	public ResponseEntity<?> uploadFile(@PathVariable("userId") String userId, @RequestParam("file") MultipartFile listFile,
 			@RequestParam("dataType") String dataType) {
-		if (file.isEmpty())
+		if (listFile.isEmpty())
 			return new ResponseEntity<>("file date doesn't exsit", HttpStatus.BAD_REQUEST);
 
-		NaturalizationAliens naturializationAliens = naturalizationService.uploadNaturalAlientDoc(userId, file);
+		NaturalizationAliens naturializationAliens = naturalizationService.uploadNaturalAlientDoc(userId, listFile);
 		if (naturializationAliens == null)
 			return new ResponseEntity<>("payload missing", HttpStatus.BAD_REQUEST);
 

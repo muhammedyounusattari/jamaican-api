@@ -72,4 +72,7 @@ db.roles.insert({userId:'operationsmanager',password:'admin',name:'Operations Ma
 --//tier fource(Director)
 db.roles.insert({userId:'director',password:'admin',name:'Director',url:'/officalForms',desc:'Director will be called after the Operations Manager has reviewed applicantion'});
 
+db.roles.insert({userId:'ceo',password:'admin',name:'CEO',url:'/officalForms',desc:'CEO committee reviews application after the Director has reviewed applicantion'});
+
+db.roles.insert({userId:'permanentsecretary',password:'admin',name:'Permanent Secretary',url:'/officalForms',desc:'Permanent Secretary committee reviews application after the CEO has reviewed applicantion'});
 

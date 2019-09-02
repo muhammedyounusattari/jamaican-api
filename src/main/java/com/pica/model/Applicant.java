@@ -4,6 +4,7 @@ public class Applicant {
 
 	private Integer applicantId;
 	private String name;
+	private String appliedFor;
 
 	public Integer getApplicantId() {
 		return applicantId;
@@ -20,5 +21,15 @@ public class Applicant {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getAppliedFor() {
+		return appliedFor;
+	}
+
+	public void setAppliedFor(String appliedFor) {
+		this.appliedFor = appliedFor;
+	}
+	
+	
 
 }

@@ -212,7 +212,7 @@ public class Profile {
 	}
 
 	public void setEmail(String email) {
-		this.email = email.toLowerCase();
+		this.email = (email!=null)? email.toLowerCase():"";
 	}
 
 	public String getNumber() {

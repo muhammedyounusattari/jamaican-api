@@ -18,10 +18,10 @@ public interface JamaicanURIConstants {
 	// Agent url's
 
 	public static final String GET_FORMS_REVIEW = "/forms-review/{formType}/{type}";
-	public static final String GET_AGENTS = "/load-agents/";
+	public static final String GET_AGENTS = "/load-agents/{formType}";
 	public static final String ASSIGN_TO_AGENT = "/assign-to-agent";
 	public static final String VALIDATE_AGENT = "/validate-agent";
-	public static final String APPLICANT_DETAIL = "/applicant-detail/{applicantId}";
+	public static final String APPLICANT_DETAIL = "/applicant-detail/{applicantId}/{formType}";
 	public static final String UPDATE_STATUS = "/update-applicant";
 	public static final String AGENT_APPLICANTS = "/agent-applicant/{agentId}/{formType}";
 	
@@ -36,7 +36,7 @@ public interface JamaicanURIConstants {
 	//DeskClerk
 	
 	public static final String DC_APPLICANTS = "/deskclerk-applicant/{clerkId}/{formType}";
-	public static final String GET_DESKCLERK = "/load-deskclerk/";
+	public static final String GET_DESKCLERK = "/load-deskclerk/{formType}";
 	public static final String ASSIGN_TO_DESKCLERK = "/assign-to-deskclerk";
 	
 	

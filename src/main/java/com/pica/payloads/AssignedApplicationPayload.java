@@ -10,6 +10,7 @@ public class AssignedApplicationPayload {
 
 	private  Integer agent;
 	private String name;
+	private String appType;
 	private  List<Applicant> appCodes;
 	
 	public AssignedApplicationPayload() {
@@ -36,5 +37,14 @@ public class AssignedApplicationPayload {
 	public String getName() {
 		return this.name;
 	}
+
+	public String getAppType() {
+		return appType;
+	}
+
+	public void setAppType(String appType) {
+		this.appType = appType;
+	}
+	
 	
 }

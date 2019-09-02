@@ -27,6 +27,7 @@ import com.pica.dao.AllFormsDAO;
 import com.pica.dao.CreateProfileDAO;
 import com.pica.dao.DescentFormDAO;
 import com.pica.dao.DeskClerkDAO;
+import com.pica.dao.NaturalizationAliensDAO;
 import com.pica.dao.RolesDAO;
 import com.pica.dao.SequenceDAO;
 import com.pica.dao.SupervisorDAO;
@@ -45,6 +46,7 @@ import com.pica.model.DeskClerk;
 import com.pica.model.Profile;
 import com.pica.model.Roles;
 import com.pica.model.Supervisor;
+import com.pica.model.natural.alien.NaturalizationAliens;
 import com.pica.payloads.AssignedApplicationPayload;
 import com.pica.service.DescentFormService;
 
@@ -81,6 +83,9 @@ public class DescentFormServiceImpl implements DescentFormService {
 	
 	@Autowired
 	private RolesDAO rolesDAO;
+	
+	@Autowired
+	private NaturalizationAliensDAO naturalizationAliensDAO;
 
 	//@Value("${email.enabled}")
 	private String isEmailEnabled="true";;
@@ -266,7 +271,7 @@ public class DescentFormServiceImpl implements DescentFormService {
 	}
 
 	@Override
-	public List<DescentForm> getReviewForms(String formType, String type) {
+	public List<?> getReviewForms(String formType, String type) {
 		List<Profile> profileList = null;
 		
 		List<String> status = new ArrayList<>();
@@ -292,105 +297,328 @@ public class DescentFormServiceImpl implements DescentFormService {
 			status.add(FormStatus.DIRECTOR.getStatus());
 		}
 		
-		if (formType.equalsIgnoreCase(PICAApplictions.DPA.toString()))
+		if("ceo".equalsIgnoreCase(type)) {
+			status.add(FormStatus.CEO.getStatus());
+		}
+		
+		if("permanentsecretary".equalsIgnoreCase(type)) {
+			status.add(FormStatus.PERMANENTSECRETARY.getStatus());
+		}
+		
+		
+		
+		
+		if (formType.equalsIgnoreCase(PICAApplictions.DPA.toString())) {
+			
 			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.DPA.toString(),
 					status);
+			if (profileList != null && profileList.size() > 0) {
 
-		else if (formType.equalsIgnoreCase(PICAApplictions.CJA.getApplication()))
-			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.CJA.getApplication(),
-					status);
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
 
-		else if (formType.equalsIgnoreCase(PICAApplictions.JCRM.getApplication()))
-			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.JCRM.getApplication(),
-					status);
+				return descentFormDAO.findBy_id(list);
 
-		else if (formType.equalsIgnoreCase(PICAApplictions.NACW.getApplication()))
-			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.NACW.getApplication(),
-					status);
-
-		else if (formType.equalsIgnoreCase(PICAApplictions.RGJC.getApplication()))
-			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RGJC.getApplication(),
-					status);
-
-		else if (formType.equalsIgnoreCase(PICAApplictions.RC.getApplication()))
-			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RC.getApplication(),
-					status);
-
-		else if (formType.equalsIgnoreCase(PICAApplictions.RCWC.getApplication()))
-			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RCWC.getApplication(),
-					status);
-
-		else if (formType.equalsIgnoreCase(PICAApplictions.RVM.getApplication()))
-			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RVM.getApplication(),
-					status);
-
-		else if (formType.equalsIgnoreCase(PICAApplictions.RJC.getApplication()))
-			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RJC.getApplication(),
-					status);
-
-		else
-			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.DPA.getApplication(),
-					status);
-
-		if (profileList != null && profileList.size() > 0) {
-
-			List<Integer> list = new ArrayList<>();
-			for (Profile profile : profileList) {
-				list.add(Integer.parseInt(profile.getAppCode()));
 			}
-
-			return descentFormDAO.findBy_id(list);
-
+			
 		}
+
+		else if (formType.equalsIgnoreCase(PICAApplictions.CJA.toString())) {
+			return null;
+			
+			/*profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.CJA.toString(),
+					status);
+			if (profileList != null && profileList.size() > 0) {
+
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
+
+				return descentFormDAO.findBy_id(list);
+
+			} */
+		}
+
+		else if (formType.equalsIgnoreCase(PICAApplictions.JCRM.toString())) {
+			
+		/*	profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.JCRM.toString(),
+					status);
+			if (profileList != null && profileList.size() > 0) {
+
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
+
+				return descentFormDAO.findBy_id(list); 
+			
+
+			}*/
+			return null;
+		}
+
+		else if (formType.equalsIgnoreCase(PICAApplictions.NACW.toString())) {
+			
+			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.NACW.toString(),
+					status);
+			if (profileList != null && profileList.size() > 0) {
+
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
+				List<NaturalizationAliens> naturalizationAliens =  naturalizationAliensDAO.findBy_id(list);
+				return naturalizationAliens;
+			}
+		}
+
+		else if (formType.equalsIgnoreCase(PICAApplictions.RGJC.toString())) {
+			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RGJC.toString(),
+					status);
+			
+			if (profileList != null && profileList.size() > 0) {
+
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
+
+				return descentFormDAO.findBy_id(list);
+
+			}
+		}
+
+		else if (formType.equalsIgnoreCase(PICAApplictions.RC.toString())) {
+			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RC.toString(),
+					status);			
+			if (profileList != null && profileList.size() > 0) {
+
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
+
+				return descentFormDAO.findBy_id(list);
+
+			}
+		}
+
+		else if (formType.equalsIgnoreCase(PICAApplictions.RCWC.toString())) {
+			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RCWC.toString(),
+					status);			
+			if (profileList != null && profileList.size() > 0) {
+
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
+
+				return descentFormDAO.findBy_id(list);
+
+			}
+		}
+
+		else if (formType.equalsIgnoreCase(PICAApplictions.RVM.toString())) {
+			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RVM.toString(),
+					status);
+			if (profileList != null && profileList.size() > 0) {
+
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
+
+				return descentFormDAO.findBy_id(list);
+
+			}
+		}
+
+		else if (formType.equalsIgnoreCase(PICAApplictions.RJC.toString())) {
+			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.RJC.toString(),
+					status);
+			if (profileList != null && profileList.size() > 0) {
+
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
+
+				return descentFormDAO.findBy_id(list);
+
+			}
+		}
+
+		else {
+			profileList = profileDAO.findByAppliedAndStatus(PICAApplictions.DPA.toString(),
+					status);
+			if (profileList != null && profileList.size() > 0) {
+
+				List<Integer> list = new ArrayList<>();
+				for (Profile profile : profileList) {
+					list.add(Integer.parseInt(profile.getAppCode()));
+				}
+
+				return descentFormDAO.findBy_id(list);
+
+			}
+		}
+
+		
 
 		return null;
 	}
 
 	@Override
-	public List<Agent> getAgents() {
+	public List<Agent> getAgents(String formType) {
 
-		return agentDAO.findAll();
+		if (formType == null)
+			return null;
+
+		List<Agent> agentList = agentDAO.findAll();
+		List<Agent> filteredAgentList = new ArrayList<Agent>();
+		
+		if(agentList != null)
+		
+		agentList.forEach(agent -> {
+			ArrayList<Applicant> applicants = agent.getApplications();
+			ArrayList<Applicant> filteredApplicants = new ArrayList<>();
+
+			if (applicants != null)
+				applicants.forEach(applicant -> {
+					if (applicant.getAppliedFor() != null)
+						if (formType.equalsIgnoreCase(applicant.getAppliedFor())) {
+							filteredApplicants.add(applicant);
+						}
+				});
+			Agent filteredAgent = new Agent();
+			filteredAgent.set_id(agent.get_id());
+			filteredAgent.setApplications(filteredApplicants);
+			filteredAgent.setFormType(agent.getFormType());
+			filteredAgent.setName(agent.getName());
+
+			filteredAgentList.add(filteredAgent);
+		});
+
+		return filteredAgentList;
+
 	}
 	
 	@Override
-	public List<DeskClerk> getDeskClerk() {
-		return deskClerkDAO.findAll();
+	public List<DeskClerk> getDeskClerk(String formType) {
+	//	return deskClerkDAO.findAll();
+		
+		if (formType == null)
+			return null;
+
+		List<DeskClerk> agentList = deskClerkDAO.findAll();
+		List<DeskClerk> filteredAgentList = new ArrayList<DeskClerk>();
+		
+		if(agentList != null)
+		
+		agentList.forEach(deskClerk -> {
+			ArrayList<Applicant> applicants = deskClerk.getApplications();
+			ArrayList<Applicant> filteredApplicants = new ArrayList<>();
+
+			if (applicants != null)
+				applicants.forEach(applicant -> {
+					if (applicant.getAppliedFor() != null)
+						if (formType.equalsIgnoreCase(applicant.getAppliedFor())) {
+							filteredApplicants.add(applicant);
+						}
+				});
+			DeskClerk filteredAgent = new DeskClerk();
+			filteredAgent.set_id(deskClerk.get_id());
+			filteredAgent.setApplications(filteredApplicants);
+			filteredAgent.setFormType(deskClerk.getFormType());
+			filteredAgent.setName(deskClerk.getName());
+
+			filteredAgentList.add(filteredAgent);
+		});
+
+		return filteredAgentList;
+		
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public Supervisor assignApplicationToAgent(AssignedApplicationPayload payload) {
+		String application = payload.getAppType();
+		
+		if(application == null)
+			return null;
+		
 		List<Applicant> appCodeList = payload.getAppCodes();
 
 		List<Integer> applicantCodes = AdminReviewFormMapper.getApplicantCodes(payload.getAppCodes());
-		List<DescentForm> applicationList = descentFormDAO.findBy_id(applicantCodes);
+		
+			if(applicantCodes!=null && applicantCodes.size()>0) {
+			
+			if(application.equalsIgnoreCase(PICAApplictions.DPA.toString())){
+				List<DescentForm> applicationList = descentFormDAO.findBy_id(applicantCodes);
 
-		if (applicationList.size() > 0) {
-			Agent agent = agentDAO.findBy_Id(payload.getAgent());
-			agent = agentDAO.save(AdminReviewFormMapper.syncDBAgent(agent, appCodeList));
+				if (applicationList.size() > 0) {
+					Agent agent = agentDAO.findBy_Id(payload.getAgent());
+					agent = agentDAO.save(AdminReviewFormMapper.syncDBAgent(agent, appCodeList));
 
-			applicationList.forEach((descent) -> {
+					applicationList.forEach((descent) -> {
 
-				Profile profile = descent.getProfile();
-				if (profile != null && profile.getEmail() != null) {
-					profile = profileDAO.findBy_Id(profile.getId());
-					profile.setStatus(FormStatus.REVIEW.getStatus());
-					profile = profileDAO.save(profile);
-					descent.setProfile(profile);
-				}
-				descent.setStatus(FormStatus.REVIEW.getStatus());
-				descentFormDAO.save(descent);
-			});
-			System.out.println();
+						Profile profile = descent.getProfile();
+						if (profile != null && profile.getEmail() != null) {
+							profile = profileDAO.findBy_Id(profile.getId());
+							profile.setStatus(FormStatus.REVIEW.getStatus());
+							profile = profileDAO.save(profile);
+							descent.setProfile(profile);
+						}
+						descent.setStatus(FormStatus.REVIEW.getStatus());
+						descentFormDAO.save(descent);
+					});
+					System.out.println();
 
-			Supervisor supervisor = new Supervisor();
-//			Supervisor superVisor = supervisorDAO.findByAgent_id(payload.getAgent());
-//			if (superVisor == null)
-//				superVisor = new Supervisor();
+					Supervisor supervisor = new Supervisor();
+//					Supervisor superVisor = supervisorDAO.findByAgent_id(payload.getAgent());
+//					if (superVisor == null)
+//						superVisor = new Supervisor();
 
-//			superVisor.setAgent(agent);
-			//return supervisorDAO.save(superVisor);
-			return supervisor;
+//					superVisor.setAgent(agent);
+					//return supervisorDAO.save(superVisor);
+					return supervisor;
+			}
+		}
+			if(application.equalsIgnoreCase(PICAApplictions.NACW.toString())){
+				List<NaturalizationAliens> applicationList = naturalizationAliensDAO.findBy_id(applicantCodes);
+
+				if (applicationList.size() > 0) {
+					Agent agent = agentDAO.findBy_Id(payload.getAgent());
+					agent = agentDAO.save(AdminReviewFormMapper.syncDBAgent(agent, appCodeList));
+
+					applicationList.forEach((naturalisation) -> {
+
+						Profile profile = naturalisation.getProfile();
+						if (profile != null && profile.getEmail() != null) {
+							profile = profileDAO.findBy_Id(profile.getId());
+							profile.setStatus(FormStatus.REVIEW.getStatus());
+							profile = profileDAO.save(profile);
+							naturalisation.setProfile(profile);
+						}
+						naturalisation.setStatus(FormStatus.REVIEW.getStatus());
+						naturalizationAliensDAO.save(naturalisation);
+					});
+					System.out.println();
+
+					Supervisor supervisor = new Supervisor();
+//					Supervisor superVisor = supervisorDAO.findByAgent_id(payload.getAgent());
+//					if (superVisor == null)
+//						superVisor = new Supervisor();
+
+//					superVisor.setAgent(agent);
+					//return supervisorDAO.save(superVisor);
+					return supervisor;
+			}
+		}
+		
 
 		}
 		return null;
@@ -400,9 +628,92 @@ public class DescentFormServiceImpl implements DescentFormService {
 	@Override
 	@SuppressWarnings("unchecked")
 	public Supervisor assignApplicationToDeskClerk(AssignedApplicationPayload payload) {
+		
+		String application = payload.getAppType();
+		
+		if(application == null)
+			return null;
+		
 		List<Applicant> appCodeList = payload.getAppCodes();
 
+		
 		List<Integer> applicantCodes = AdminReviewFormMapper.getApplicantCodes(payload.getAppCodes());
+		
+		if(applicantCodes!=null && applicantCodes.size()>0) {
+			
+			if(application.equalsIgnoreCase(PICAApplictions.DPA.toString())){
+				
+				List<DescentForm> applicationList = descentFormDAO.findBy_id(applicantCodes);
+				
+				DeskClerk deskClerk = deskClerkDAO.findBy_Id(payload.getAgent());
+				deskClerk = deskClerkDAO.save(AdminReviewFormMapper.syncDBDeskClerk(deskClerk, appCodeList));
+
+				applicationList.forEach((descent) -> {
+
+					Profile profile = descent.getProfile();
+					if (profile != null && profile.getEmail() != null) {
+						profile = profileDAO.findBy_Id(profile.getId());
+						profile.setStatus(FormStatus.PROCESSING.getStatus());
+						profile = profileDAO.save(profile);
+						descent.setProfile(profile);
+					}
+					descent.setStatus(FormStatus.PROCESSING.getStatus());
+					descentFormDAO.save(descent);
+				});
+				System.out.println();
+
+				Supervisor superVisor = new Supervisor();
+			
+				return superVisor;
+			}
+			
+			if(application.equalsIgnoreCase(PICAApplictions.NACW.toString())){
+
+				
+				List<NaturalizationAliens> applicationList = naturalizationAliensDAO.findBy_id(applicantCodes);
+				
+				DeskClerk deskClerk = deskClerkDAO.findBy_Id(payload.getAgent());
+				deskClerk = deskClerkDAO.save(AdminReviewFormMapper.syncDBDeskClerk(deskClerk, appCodeList));
+
+				applicationList.forEach((naturalization) -> {
+
+					Profile profile = naturalization.getProfile();
+					if (profile != null && profile.getEmail() != null) {
+						profile = profileDAO.findBy_Id(profile.getId());
+						profile.setStatus(FormStatus.PROCESSING.getStatus());
+						profile = profileDAO.save(profile);
+						naturalization.setProfile(profile);
+					}
+					naturalization.setStatus(FormStatus.PROCESSING.getStatus());
+					naturalizationAliensDAO.save(naturalization);
+				});
+				System.out.println();
+
+				Supervisor superVisor = new Supervisor();
+			
+				return superVisor;
+			
+			}
+			
+		/*	if(application.equalsIgnoreCase(PICAApplictions.DPA.toString()){
+				
+			}
+
+			if(application.equalsIgnoreCase(PICAApplictions.DPA.toString()){
+	
+			}
+			
+			if(application.equalsIgnoreCase(PICAApplictions.DPA.toString()){
+				
+			}
+			
+			if(application.equalsIgnoreCase(PICAApplictions.DPA.toString()){
+				
+			} */
+		}
+		
+		
+		
 		List<DescentForm> applicationList = descentFormDAO.findBy_id(applicantCodes);
 
 		if (applicationList.size() > 0) {
@@ -424,13 +735,7 @@ public class DescentFormServiceImpl implements DescentFormService {
 			System.out.println();
 
 			Supervisor superVisor = new Supervisor();
-			// supervisorDAO.findByDeskClerk_id(payload.getAgent());
-			//Need to remove supervisor table
-//			if (superVisor == null)
-//				superVisor = new Supervisor();
-
-			//superVisor.setDeskClerk(deskClerk);
-			//return supervisorDAO.save(superVisor);
+		
 			return superVisor;
 
 		}
@@ -447,9 +752,28 @@ public class DescentFormServiceImpl implements DescentFormService {
 	}
 
 	@Override
-	public DescentForm getApplicantForm(String applicantId) {
+	public List<?> getApplicantForm(String applicantId,String formType) {
 
-		return descentFormDAO.findBy_id(Integer.parseInt(applicantId));
+		if(formType.equalsIgnoreCase(PICAApplictions.DPA.toString())) {
+			
+			DescentForm descentForm = descentFormDAO.findBy_id(Integer.parseInt(applicantId));
+			List<DescentForm> list = new ArrayList<DescentForm>();
+			if(descentForm!=null)
+				list.add(descentForm);
+			return list;
+		}
+		
+		if(formType.equalsIgnoreCase(PICAApplictions.NACW.toString())) {
+			
+			NaturalizationAliens naturalizationForm = naturalizationAliensDAO.findBy_id(Integer.parseInt(applicantId));
+			List<NaturalizationAliens> list = new ArrayList<NaturalizationAliens>();
+			if(naturalizationForm!=null)
+				list.add(naturalizationForm);
+			return list;
+		}
+		
+		return null;
+		
 	}
 
 	
@@ -459,11 +783,13 @@ public class DescentFormServiceImpl implements DescentFormService {
 		String applicantId = payload.get("applicantId");
 		String status = payload.get("status");
 		String agentId = payload.get("agentId");
+		String formType = payload.get("formType");
 		Profile profile = null;
 		DescentForm descentForm = null;
+		NaturalizationAliens naturalAliens = null;
 		String message = null;
 
-		if (applicantId != null && status != null && agentId !=null) {
+		if (applicantId != null && status != null && agentId !=null && formType !=null) {
 			int applicant = Integer.parseInt(applicantId);
 			profile = profileDAO.findByCustId(applicantId);
 
@@ -472,12 +798,19 @@ public class DescentFormServiceImpl implements DescentFormService {
 				profile.setComment(payload.get("comments"));
 				profile = profileDAO.save(profile);
 
-				descentForm = descentFormDAO.findBy_id((applicant));
-				descentForm.setProfile(profile);
-				descentForm.setStatus(FormStatus.getByValue(status).getStatus());
-				descentForm = descentFormDAO.save(descentForm);
+				if(formType.equalsIgnoreCase(PICAApplictions.DPA.toString())) {
+					descentForm = descentFormDAO.findBy_id((applicant));
+					descentForm.setProfile(profile);
+					descentForm.setStatus(FormStatus.getByValue(status).getStatus());
+					descentForm = descentFormDAO.save(descentForm);
+				}
 				
-			
+				if(formType.equalsIgnoreCase(PICAApplictions.NACW.toString())) {
+					naturalAliens = naturalizationAliensDAO.findBy_id(applicant);
+					naturalAliens.setProfile(profile);
+					naturalAliens.setStatus(FormStatus.getByValue(status).getStatus());
+				}
+				
 				DeskClerk deskClerk = deskClerkDAO.findBy_Id(Integer.parseInt(agentId));
 				List<Applicant> dbList = deskClerk.getApplications();
 				ArrayList<Applicant> list = new ArrayList<>();
@@ -558,9 +891,10 @@ public class DescentFormServiceImpl implements DescentFormService {
 	@Override
 	public Profile scheduleAppointment(Map<String, String> payload) {
 		String applicantId = payload.get("applicantId");
+		String applied = payload.get("applied");
 
 		Profile profile = profileDAO.findByAppCode(applicantId);
-		if (profile != null) {
+		if (profile != null && applied != null) {
 			profile.setStatus(FormStatus.SCHEDULE.getStatus());
 			profile.setTime(payload.get("time"));
 			profile.setDate(payload.get("date"));
@@ -568,10 +902,18 @@ public class DescentFormServiceImpl implements DescentFormService {
 //			profile.setDate(formatDate(payload.get("date")));
 
 			profile = profileDAO.save(profile);
-			DescentForm descentForm = descentFormDAO.findByAppCode(applicantId);
-			descentForm.setProfile(profile);
-
-			descentFormDAO.save(descentForm);
+			if(applied.equalsIgnoreCase(PICAApplictions.DPA.toString())) {
+				DescentForm descentForm = descentFormDAO.findByAppCode(applicantId);
+				descentForm.setProfile(profile);
+				descentFormDAO.save(descentForm);
+			}
+			
+			if(applied.equalsIgnoreCase(PICAApplictions.NACW.toString())) {
+				NaturalizationAliens naturalizationAliens = naturalizationAliensDAO.findByAppCode(applicantId);
+				naturalizationAliens.setProfile(profile);
+				naturalizationAliensDAO.save(naturalizationAliens);
+			}
+			
 			
 			try {
 			message = EmailMessageTemplate.getApplicantStatusUpdateMail(profile);
@@ -581,9 +923,11 @@ public class DescentFormServiceImpl implements DescentFormService {
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+			LOG.info("profile data after updating a status of schedule appointment ",profile);
+			return profile;
 		}
-		return profile;
-
+		LOG.info("appointment didn't schedule due to mismatch of payload");
+		return null;
 	}
 
 	private Date formatDate(String string) {
@@ -632,13 +976,19 @@ public class DescentFormServiceImpl implements DescentFormService {
 			return null;
 		}
 		
+		ArrayList<Applicant> applicationList = agent.getApplications();
+		ArrayList<Applicant> typeOfApplicant = new ArrayList<Applicant>();
+		applicationList.forEach(applicant->{
+			
+			if(formType.equalsIgnoreCase(applicant.getAppliedFor())) {
+				typeOfApplicant.add(applicant);
+			}
+			
+		});
+		agent.setFormType(formType);
+		agent.setApplications(typeOfApplicant);
+		
 		LOG.info("agentId "+agentId+" has following list of applicant "+agent.toString());
-		if(agent.getApplications().size()>0) {
-			
-//			agent.getApplications()agent.fo
-			
-//			List<Profile> profileList = profileDAO.findByAppCodeAndStatus(agent.getApplications(), FormStatus.REVIEW.getStatus());
-		}
 		return agent;
 	}
 
@@ -656,20 +1006,34 @@ public class DescentFormServiceImpl implements DescentFormService {
 			LOG.info("desckClerk with clerkId "+clerkId+", doesn't hold any applicant "+deskClerk);
 			return null;
 		}
+		ArrayList<Applicant> applicationList = deskClerk.getApplications();
+		ArrayList<Applicant> typeOfApplicant = new ArrayList<Applicant>();
+		applicationList.forEach(applicant->{
+			
+			if(formType.equalsIgnoreCase(applicant.getAppliedFor())) {
+				typeOfApplicant.add(applicant);
+			}
+			
+		});
+		deskClerk.setFormType(formType);
+		deskClerk.setApplications(typeOfApplicant);
+		
 		LOG.info("agentId "+clerkId+" has following list of applicant "+deskClerk.toString());
 		return deskClerk;
 	}
 
 	@Override
-	public DescentForm updateApplicantStatusInProfile(Map<String, String> payload) {
+	public Object updateApplicantStatusInProfile(Map<String, String> payload) {
 		String applicantId = payload.get("applicantId");
 		String status = payload.get("status");
+		String formType = payload.get("formType");
 
 		Profile profile = null;
 		DescentForm descentForm = null;
+		NaturalizationAliens naturalizationAliens = null;
 		String message = null;
 
-		if (applicantId != null && status != null) {
+		if (applicantId != null && status != null && formType !=null) {
 			int applicant = Integer.parseInt(applicantId);
 			profile = profileDAO.findByCustId(applicantId);
 
@@ -678,12 +1042,24 @@ public class DescentFormServiceImpl implements DescentFormService {
 				profile.setComment(payload.get("comments"));
 				profile = profileDAO.save(profile);
 
-				descentForm = descentFormDAO.findBy_id((applicant));
-				descentForm.setProfile(profile);
-				descentForm.setStatus(FormStatus.getByValue(status).getStatus());
-				descentForm = descentFormDAO.save(descentForm);
+				if(formType.equalsIgnoreCase(PICAApplictions.DPA.toString())) {
+					descentForm = descentFormDAO.findBy_id((applicant));
+					descentForm.setProfile(profile);
+					descentForm.setStatus(FormStatus.getByValue(status).getStatus());
+					descentForm = descentFormDAO.save(descentForm);
 
-				return descentForm;
+					return descentForm;
+				}
+				
+				if(formType.equalsIgnoreCase(PICAApplictions.NACW.toString())) {
+					naturalizationAliens = naturalizationAliensDAO.findBy_id(applicant);
+					naturalizationAliens.setProfile(profile);
+					naturalizationAliens.setStatus(FormStatus.getByValue(status).getStatus());
+					naturalizationAliens = naturalizationAliensDAO.save(naturalizationAliens);
+					return naturalizationAliens;
+				}
+				
+				
 			}
 		}
 		return null;

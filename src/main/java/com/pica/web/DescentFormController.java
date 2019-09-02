@@ -59,10 +59,10 @@ public interface DescentFormController {
 	public ResponseEntity<?> getFormForReview(@PathVariable("formType") String formType,@PathVariable("type") String type);
 
 	@RequestMapping(value = JamaicanURIConstants.GET_AGENTS, method = RequestMethod.GET)
-	public ResponseEntity<?> getAgentsList();
+	public ResponseEntity<?> getAgentsList(@PathVariable("formType") String formType);
 	
 	@RequestMapping(value = JamaicanURIConstants.GET_DESKCLERK, method = RequestMethod.GET)
-	public ResponseEntity<?> getDeskClerkList();
+	public ResponseEntity<?> getDeskClerkList(@PathVariable("formType") String formType);
 
 	@RequestMapping(value = JamaicanURIConstants.ASSIGN_TO_AGENT, method = RequestMethod.POST)
 	public ResponseEntity<?> getAssignedToAgent(@RequestBody AssignedApplicationPayload payload);
@@ -74,7 +74,7 @@ public interface DescentFormController {
 	public ResponseEntity<?> getAgentValidate(@RequestBody Profile profile);
 
 	@RequestMapping(value = JamaicanURIConstants.APPLICANT_DETAIL, method = RequestMethod.GET)
-	public ResponseEntity<?> getApplicantDetails(@PathVariable("applicantId") String applicantId);
+	public ResponseEntity<?> getApplicantDetails(@PathVariable("applicantId") String applicantId,@PathVariable("formType") String formType);
 
 	@RequestMapping(value = JamaicanURIConstants.UPDATE_STATUS, method = RequestMethod.POST)
 	public ResponseEntity<?> updateApplicantStatus(@RequestBody Map<String, String> payload);

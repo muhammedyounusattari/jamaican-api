@@ -7,7 +7,7 @@ public enum FormStatus {
 
 
 	SUBMITTED("submitted"), PROCESSING("processing"), INCOMPLETE("incomplete"), DECLINED("declined"),SCHEDULE("schedule"),
-	REFFERED("reffered"), COMPLETED("completed"), PAS("pas"),CS("cs"),REVIEW("review"),OM("om"),DIRECTOR("director");
+	REFFERED("reffered"), COMPLETED("completed"), PAS("pas"),CS("cs"),REVIEW("review"),OM("om"),DIRECTOR("director"),CEO("ceo"),PERMANENTSECRETARY("permanentsecretary");
 
 	private static final Map<String, FormStatus> map = new HashMap<>();
 

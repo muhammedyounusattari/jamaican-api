@@ -42,15 +42,15 @@ public interface DescentFormService {
 
 	DescentForm getDescentFormData(Map<String, String> payload);
 
-	List<DescentForm> getReviewForms(String formType,String type);
+	List<?> getReviewForms(String formType,String type);
 
-	List<Agent> getAgents();
+	List<Agent> getAgents(String formType);
 
 	Supervisor assignApplicationToAgent(AssignedApplicationPayload payload);
 
 	Agent getAgentDetails(Profile profile);
 
-	DescentForm getApplicantForm(String applicantId);
+	List<?> getApplicantForm(String applicantId,String formType);
 
 	Agent updateApplicantStatus(Map<String, String> payload);
 
@@ -64,12 +64,12 @@ public interface DescentFormService {
 
 	DeskClerk getDeskClerkApplicants(String agentId, String formType);
 
-	List<DeskClerk> getDeskClerk();
+	List<DeskClerk> getDeskClerk(String formType);
 
 	Supervisor assignApplicationToDeskClerk(AssignedApplicationPayload payload);
 
 	DeskClerk updateApplicantStatusInDeskClerk(Map<String, String> payload);
 
-	DescentForm updateApplicantStatusInProfile(Map<String, String> payload);
+	Object updateApplicantStatusInProfile(Map<String, String> payload);
 
 }

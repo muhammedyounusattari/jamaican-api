@@ -23,8 +23,8 @@ public class DescentFormMapper {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DescentFormMapper.class);
 	// private static String  UPLOADED_FOLDER = "C:\\Users\\Younus\\Kastech work space\\jamaican-citizenship-ui\\Kastech workspace\\jamaican-citizenship-ui\\src\\assets\\documents\\";
-	private static String UPLOADED_FOLDER = "/Users/admin/Downloads/Kastech workspace/jamaican-citizenship-ui/Kastech workspace/jamaican-citizenship-ui/src/assets/documents/";
-
+	private static String UPLOADED_FOLDER = "/Users/MuhammedYounusAttari/git/jamaican-citizenship-ui/Kastech workspace/jamaican-citizenship-ui/src/assets/documents/";
+	
 	public static DescentForm formatPayload(DescentFormHandler descentFormHander) {
 
 		DescentForm descentForm = new DescentForm();

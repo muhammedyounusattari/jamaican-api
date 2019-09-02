@@ -132,23 +132,23 @@ public class DescentFormControllerImpl implements DescentFormController {
 	}
 
 	@Override
-	public ResponseEntity<?> getFormForReview(String formType,String type) {
+	public ResponseEntity<?> getFormForReview(String formType, String type) {
 		if (formType == null)
 			return new ResponseEntity<>("formType is missing", HttpStatus.BAD_REQUEST);
 
 		return new ResponseEntity<ResponsePayload>(
-				new ResponsePayload(descentService.getReviewForms(formType,type), HttpStatus.OK), HttpStatus.OK);
+				new ResponsePayload(descentService.getReviewForms(formType, type), HttpStatus.OK), HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<?> getAgentsList() {
-		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getAgents(), HttpStatus.OK),
+	public ResponseEntity<?> getAgentsList(String formType) {
+		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getAgents(formType), HttpStatus.OK),
 				HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<?> getDeskClerkList() {
-		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getDeskClerk(), HttpStatus.OK),
+	public ResponseEntity<?> getDeskClerkList(String formType) {
+		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getDeskClerk(formType), HttpStatus.OK),
 				HttpStatus.OK);
 	}
 
@@ -177,26 +177,28 @@ public class DescentFormControllerImpl implements DescentFormController {
 	}
 
 	@Override
-	public ResponseEntity<?> getApplicantDetails(String applicantId) {
+	public ResponseEntity<?> getApplicantDetails(String applicantId, String formType) {
 		if (applicantId == null)
 			return new ResponseEntity<>("applicantId is missing", HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<DescentForm>(this.descentService.getApplicantForm(applicantId), HttpStatus.OK);
+		return new ResponseEntity<>(this.descentService.getApplicantForm(applicantId, formType), HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<?> updateApplicantStatus(Map<String, String> payload) {
 
 		String type = payload.get("type");
-		
-		if (payload == null && type !=null)
+
+		if (payload == null && type != null)
 			return new ResponseEntity<String>("payload is missing", HttpStatus.BAD_REQUEST);
 
-		if(type.equalsIgnoreCase("deskClerk"))
-			return new ResponseEntity<DeskClerk>(descentService.updateApplicantStatusInDeskClerk(payload), HttpStatus.OK);
-		else if(type.equalsIgnoreCase("agent"))
+		if (type.equalsIgnoreCase("deskClerk"))
+			return new ResponseEntity<DeskClerk>(descentService.updateApplicantStatusInDeskClerk(payload),
+					HttpStatus.OK);
+		else if (type.equalsIgnoreCase("agent"))
 			return new ResponseEntity<Agent>(descentService.updateApplicantStatus(payload), HttpStatus.OK);
 		else
-			return new ResponseEntity<DescentForm>(descentService.updateApplicantStatusInProfile(payload), HttpStatus.OK);
+			return new ResponseEntity<>(descentService.updateApplicantStatusInProfile(payload),
+					HttpStatus.OK);
 	}
 
 	@Override
@@ -245,41 +247,37 @@ public class DescentFormControllerImpl implements DescentFormController {
 
 		return new ResponseEntity<DeskClerk>(descentService.getDeskClerkApplicants(agentId, formType), HttpStatus.OK);
 	}
-	
-	public static void main(String[] args)throws Exception {
-		Map<String,Application> map = new HashMap<>();
-		Application application1 = new Application("one","teo","three","four","five");
+
+	public static void main(String[] args) throws Exception {
+		Map<String, Application> map = new HashMap<>();
+		Application application1 = new Application("one", "teo", "three", "four", "five");
 		map.put("dpa", application1);
 		map.put("npa", application1);
 		map.put("rr", application1);
 		map.put("rrr", application1);
-		
+
 		List<Application> appList = new ArrayList<>();
 		appList.add(application1);
 		appList.add(application1);
 		appList.add(application1);
-		
+
 		String str = new ObjectMapper().writeValueAsString(appList);
-		
-		//String str = new ObjectMapper().writeValueAsString(map);
+
+		// String str = new ObjectMapper().writeValueAsString(map);
 		System.out.println(str);
-		
+
 	}
-	
-	
 
 }
 
 @Data
-class Application{
+class Application {
 	final String type;
 	final String status;
 	final String appCode;
 	final String custId;
 	final String base29Code;
-	
-	
-	
+
 	public Application(String type, String status, String appCode, String custId, String base29Code) {
 		super();
 		this.type = type;
@@ -288,22 +286,25 @@ class Application{
 		this.custId = custId;
 		this.base29Code = base29Code;
 	}
+
 	public String getType() {
 		return type;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public String getAppCode() {
 		return appCode;
 	}
+
 	public String getCustId() {
 		return custId;
 	}
+
 	public String getBase29Code() {
 		return base29Code;
 	}
-	
-	
-	
+
 }

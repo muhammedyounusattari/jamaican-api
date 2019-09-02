@@ -15,9 +15,17 @@ import lombok.Data;
 @Document
 public class NaturalizationAliens {
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "NaturalizationAliens [_id=" + _id + ", profile=" + profile + ", section1=" + section1 + ", section2="
+		return "NaturalizationAliens [_id=" + id + ", profile=" + profile + ", section1=" + section1 + ", section2="
 				+ section2 + ", section3=" + section3 + ", section4=" + section4 + ", section5=" + section5
 				+ ", section6=" + section6 + ", section7=" + section7 + ", section8=" + section8 + ", section9="
 				+ section9 + ", section10=" + section10 + ", accept=" + accept + ", getAccept()=" + getAccept()
@@ -30,7 +38,7 @@ public class NaturalizationAliens {
 	}
 
 	@Id
-	private int _id;
+	private int id;
 
 	private Profile profile;
 	private Section1 section1;
@@ -46,6 +54,7 @@ public class NaturalizationAliens {
 	private String accept;
 	private String appliedDate;
 	private String status;
+	
 	
 	public String getAppliedDate() {
 		return appliedDate;
@@ -82,11 +91,11 @@ public class NaturalizationAliens {
 	}
 
 	public int get_id() {
-		return _id;
+		return id;
 	}
 
 	public void set_id(int _id) {
-		this._id = _id;
+		this.id = _id;
 	}
 
 	public Profile getProfile() {
