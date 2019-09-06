@@ -18,7 +18,7 @@ public interface JamaicanURIConstants {
 	// Agent url's
 
 	public static final String GET_FORMS_REVIEW = "/forms-review/{formType}/{type}";
-	public static final String GET_AGENTS = "/load-agents/{formType}";
+	public static final String GET_AGENTS = "/load-agents/{formType}/{type}";
 	public static final String ASSIGN_TO_AGENT = "/assign-to-agent";
 	public static final String VALIDATE_AGENT = "/validate-agent";
 	public static final String APPLICANT_DETAIL = "/applicant-detail/{applicantId}/{formType}";

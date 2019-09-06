@@ -44,7 +44,7 @@ public interface DescentFormService {
 
 	List<?> getReviewForms(String formType,String type);
 
-	List<Agent> getAgents(String formType);
+	List<Agent> getAgents(String formType,String type);
 
 	Supervisor assignApplicationToAgent(AssignedApplicationPayload payload);
 

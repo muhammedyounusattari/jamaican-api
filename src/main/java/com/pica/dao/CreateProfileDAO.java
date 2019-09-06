@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.pica.commons.FormStatus;
 import com.pica.model.Profile;
 
 @Repository
@@ -27,4 +28,6 @@ public interface CreateProfileDAO extends MongoRepository<Profile, Long>{
 	
 	@Query(value="{'appCode':{$in:?0}}, 'status':?1")
 	List<Profile> findByAppCodeAndStatus(List<Integer> appCode, String status);
+	
+	Profile findByAppCodeAndStatus(Integer applicantId, FormStatus byValue);
 }

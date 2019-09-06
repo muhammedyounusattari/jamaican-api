@@ -59,7 +59,7 @@ public interface DescentFormController {
 	public ResponseEntity<?> getFormForReview(@PathVariable("formType") String formType,@PathVariable("type") String type);
 
 	@RequestMapping(value = JamaicanURIConstants.GET_AGENTS, method = RequestMethod.GET)
-	public ResponseEntity<?> getAgentsList(@PathVariable("formType") String formType);
+	public ResponseEntity<?> getAgentsList(@PathVariable("formType") String formType, @PathVariable("type") String type);
 	
 	@RequestMapping(value = JamaicanURIConstants.GET_DESKCLERK, method = RequestMethod.GET)
 	public ResponseEntity<?> getDeskClerkList(@PathVariable("formType") String formType);

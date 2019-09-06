@@ -472,9 +472,9 @@ public class DescentFormServiceImpl implements DescentFormService {
 	}
 
 	@Override
-	public List<Agent> getAgents(String formType) {
+	public List<Agent> getAgents(String formType,String type) {
 
-		if (formType == null)
+		if (formType == null || type == null)
 			return null;
 
 		List<Agent> agentList = agentDAO.findAll();
@@ -489,8 +489,9 @@ public class DescentFormServiceImpl implements DescentFormService {
 			if (applicants != null)
 				applicants.forEach(applicant -> {
 					if (applicant.getAppliedFor() != null)
-						if (formType.equalsIgnoreCase(applicant.getAppliedFor())) {
-							filteredApplicants.add(applicant);
+						if (formType.equalsIgnoreCase(applicant.getAppliedFor()) ) {
+							if(profileDAO.findByAppCodeAndStatus(applicant.getApplicantId(),FormStatus.getByValue(type))!=null)
+								filteredApplicants.add(applicant);
 						}
 				});
 			Agent filteredAgent = new Agent();

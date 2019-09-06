@@ -141,8 +141,8 @@ public class DescentFormControllerImpl implements DescentFormController {
 	}
 
 	@Override
-	public ResponseEntity<?> getAgentsList(String formType) {
-		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getAgents(formType), HttpStatus.OK),
+	public ResponseEntity<?> getAgentsList(String formType,String type) {
+		return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.getAgents(formType,type), HttpStatus.OK),
 				HttpStatus.OK);
 	}
 
