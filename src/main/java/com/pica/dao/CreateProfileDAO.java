@@ -29,5 +29,9 @@ public interface CreateProfileDAO extends MongoRepository<Profile, Long>{
 	@Query(value="{'appCode':{$in:?0}}, 'status':?1")
 	List<Profile> findByAppCodeAndStatus(List<Integer> appCode, String status);
 	
-	Profile findByAppCodeAndStatus(Integer applicantId, FormStatus byValue);
+	Profile findByAppCodeAndStatus(Integer applicantId, String byValue);
+	
+	Profile findByAppCodeAndStatus(String applicantId, String byValue);
+	
+	Profile findByAppCodeAndStatusAndApplied(String applicantId, String byValue,String applied);
 }

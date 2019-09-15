@@ -194,11 +194,33 @@ public class DescentFormControllerImpl implements DescentFormController {
 		if (type.equalsIgnoreCase("deskClerk"))
 			return new ResponseEntity<DeskClerk>(descentService.updateApplicantStatusInDeskClerk(payload),
 					HttpStatus.OK);
-		else if (type.equalsIgnoreCase("agent"))
+		else if (type.equalsIgnoreCase("agentView"))
 			return new ResponseEntity<Agent>(descentService.updateApplicantStatus(payload), HttpStatus.OK);
 		else
-			return new ResponseEntity<>(descentService.updateApplicantStatusInProfile(payload),
+			return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.updateApplicantStatusInProfile(payload),HttpStatus.OK),
 					HttpStatus.OK);
+//			return new ResponseEntity<>(new ResponsePayload(descentService.updateApplicantStatusInProfile(payload)),
+//					HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<?> updateIncompleteApplicantStatus(Map<String, String> payload) {
+
+		String type = payload.get("type");
+
+		if (payload == null && type != null)
+			return new ResponseEntity<String>("payload is missing", HttpStatus.BAD_REQUEST);
+
+		if (type.equalsIgnoreCase("deskClerk"))
+			return new ResponseEntity<DeskClerk>(descentService.updateApplicantStatusInDeskClerk(payload),
+					HttpStatus.OK);
+		else if (type.equalsIgnoreCase("agentView"))
+			return new ResponseEntity<Agent>(descentService.updateApplicantStatus(payload), HttpStatus.OK);
+		else
+			return new ResponseEntity<ResponsePayload>(new ResponsePayload(descentService.updateApplicantStatusInProfile(payload),HttpStatus.OK),
+					HttpStatus.OK);
+//			return new ResponseEntity<>(new ResponsePayload(descentService.updateApplicantStatusInProfile(payload)),
+//					HttpStatus.OK);
 	}
 
 	@Override

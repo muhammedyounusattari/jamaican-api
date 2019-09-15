@@ -70,6 +70,8 @@ public interface DescentFormService {
 
 	DeskClerk updateApplicantStatusInDeskClerk(Map<String, String> payload);
 
-	Object updateApplicantStatusInProfile(Map<String, String> payload);
+	List<?> updateApplicantStatusInProfile(Map<String, String> payload);
+	
+	public List<?> updateIncompleteApplicantStatusInProfile(Map<String, String> payload);
 
 }
